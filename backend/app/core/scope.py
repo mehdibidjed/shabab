@@ -1,6 +1,6 @@
 """Scope filtering: every list query goes through `Scope.filter`.
 
-Org paths are dotted strings (`djs.odej.dc_blida_01`), mirroring Postgres
+Org paths are dotted strings (`djs.odej.dc_constantine_01`), mirroring Postgres
 `ltree`; `path <@ scope` becomes `path = scope OR path LIKE 'scope.%'`.
 """
 from fastapi import Header, HTTPException

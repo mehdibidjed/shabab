@@ -2,10 +2,10 @@
 
 Clickable prototype of a management platform for the Youth & Sports sector of an Algerian
 wilaya, starting from the **Directorate of Youth & Sports (DJS)** dashboard. All data is
-**fictional** (wilaya of Blida) and the UI is labelled "بيانات تجريبية / Demo data".
+**fictional** (wilaya of Constantine — قسنطينة) and the UI is labelled "بيانات تجريبية / Demo data".
 
 - `backend/` — FastAPI + SQLAlchemy 2 + SQLite (`backend/shabab.db`)
-- `frontend/` — Next.js 16 (App Router), Tailwind 4, shadcn/ui (Base UI), Recharts, next-intl
+- `frontend/` — Next.js 16 (App Router, JavaScript), Tailwind 4, shadcn/ui (Base UI), Recharts, next-intl
 - `docs/decisions.md` — main design choices
 
 ## Run it

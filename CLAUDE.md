@@ -32,10 +32,10 @@ Key rule: every record belongs to one node of this tree. A user's access = **rol
 sees only their center; the Wali inspector reads everything.
 
 ## Tech stack (fixed)
-- `frontend/` — Next.js (App Router, TypeScript), Tailwind CSS, shadcn/ui, Recharts, lucide-react icons, next-intl.
+- `frontend/` — Next.js (App Router, JavaScript), Tailwind CSS, shadcn/ui, Recharts, lucide-react icons, next-intl.
 - `backend/` — FastAPI (Python 3.12), SQLAlchemy 2, Pydantic v2.
 - Database for the prototype: **SQLite** (file `backend/shabab.db`) so it runs with zero setup.
-  Keep models Postgres-compatible; the org path is stored as a string like `djs.odej.dc_blida_01`
+  Keep models Postgres-compatible; the org path is stored as a string like `djs.odej.dc_constantine_01`
   (mirrors Postgres `ltree`, which we will switch to later).
 - AI: an `ai/` module in the backend. If `DEEPSEEK_API_KEY` is set, call the DeepSeek API (OpenAI-compatible, model `deepseek-chat`);
   otherwise return clearly-labelled canned responses so the demo always works offline.
@@ -44,7 +44,7 @@ sees only their center; the Wali inspector reads everything.
 - **Arabic first, RTL**: default locale `ar` with `dir="rtl"`; also `fr` and `en`. All UI strings in message files, never hard-coded.
 - Responsive: must work on a phone (≈ 380px) and on desktop. Sidebar collapses to a drawer on mobile.
 - Backend layout: `app/modules/<name>/{router.py, service.py, models.py, schemas.py}`; one shared `app/core/scope.py` dependency filters every list query by the current user's scope.
-- All seed data is **fictional** but realistic for one wilaya (Blida): Arabic names of facilities, plausible numbers. Mark the UI with a small "بيانات تجريبية / Demo data" badge.
+- All seed data is **fictional** but realistic for one wilaya (Constantine — قسنطينة): Arabic names of facilities, plausible numbers. Mark the UI with a small "بيانات تجريبية / Demo data" badge.
 - No real authentication in the prototype: a **role switcher** in the top bar picks a demo user (DJS director, OPOW director, ODEJ director, Dar Chabab director, Wali inspector). The backend reads the role from an `X-Demo-User` header.
 - Explain design decisions briefly in commit messages and in `docs/decisions.md`.
 

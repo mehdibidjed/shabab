@@ -4,7 +4,7 @@ Short record of the main choices and why. Prototype first: simple, demo-ready, e
 
 ## Domain & data
 
-- **One org tree, dotted paths.** Every org unit has a `path` like `djs.odej.dc_blida_01`
+- **One org tree, dotted paths.** Every org unit has a `path` like `djs.odej.dc_constantine_01`
   (codes joined by dots). This mirrors Postgres `ltree`, so moving to Postgres is a column-type
   change plus `path <@ scope` instead of `LIKE`.
 - **`org_path` is denormalised onto every scoped table** (facilities, staff, members, activities,
@@ -16,7 +16,7 @@ Short record of the main choices and why. Prototype first: simple, demo-ready, e
   extra org units: departments in a youth center are positions, not separately-scoped entities.
   The UI groups people by position to keep the chart readable on a phone.
 - **Seed data is relative to today** with a fixed random seed, so "this month" is never empty and
-  numbers are reproducible for a given day. Names are fictional; communes are real Blida communes.
+  numbers are reproducible for a given day. Names are fictional; communes are real communes of Constantine.
 - **Occupancy** = booked slots ÷ (bookable spaces × 3 daily slots × days), excluding closed facilities.
 
 ## Access & scope
@@ -40,6 +40,10 @@ Short record of the main choices and why. Prototype first: simple, demo-ready, e
 
 ## Frontend
 
+- **JavaScript, not TypeScript** (project decision). `.jsx`/`.js` files with a `jsconfig.json`
+  for the `@/*` alias; the API response shapes are documented as JSDoc typedefs in `lib/api.js`.
+  `components.json` has `"tsx": false` so `shadcn add` generates `.jsx` components.
+
 - **Client-side data fetching with SWR**, keyed by `[path, demoUser]`: switching role refetches
   everything automatically and visibly. The overview remounts on role/language change so local
   state (tree selection, AI insights) never shows another scope's data.
@@ -47,7 +51,7 @@ Short record of the main choices and why. Prototype first: simple, demo-ready, e
   (`/facilities/13`); `<html lang dir>` is set server-side so there is no RTL flash. Data names are
   stored in Arabic and French; English UI falls back to French names.
 - **next-intl without its Next plugin.** For this setup the plugin only adds the
-  `next-intl/config` → `./i18n/request.ts` alias, so we declare it in `next.config.ts`. The plugin
+  `next-intl/config` → `./i18n/request.js` alias, so we declare it in `next.config.mjs`. The plugin
   eagerly loads `@swc/core`, whose native addon refused to load on the dev machine.
 - **`cacheComponents` off.** Every page depends on cookies (locale, demo user), so dynamic
   rendering is the honest default for the prototype.

@@ -1,4 +1,4 @@
-"""Seed a fictional but plausible dataset for the wilaya of Blida.
+"""Seed a fictional but plausible dataset for the wilaya of Constantine.
 
 Run with `python -m app.seed`. Recreates the database from scratch. Dates are
 relative to today so the dashboard always shows "this month" data; the random
@@ -18,43 +18,41 @@ BOOKING_HORIZON = TODAY + timedelta(days=14)
 # ---------------------------------------------------------------- org units
 OFFICES = [
     # code, parent, type, name_ar, name_fr
-    ("djs", None, "djs", "مديرية الشباب والرياضة لولاية البليدة", "Direction de la Jeunesse et des Sports de Blida"),
+    ("djs", None, "djs", "مديرية الشباب والرياضة لولاية قسنطينة", "Direction de la Jeunesse et des Sports de Constantine"),
     ("opow", "djs", "opow", "ديوان المركب المتعدد الرياضات", "Office du Parc Omnisports de Wilaya (OPOW)"),
     ("odej", "djs", "odej", "ديوان مؤسسات الشباب", "Office des Établissements de Jeunes (ODEJ)"),
 ]
 
 COMMUNES = {
-    "blida": ("البليدة", "Blida", 36.4703, 2.8277),
-    "boufarik": ("بوفاريك", "Boufarik", 36.5750, 2.9120),
-    "larbaa": ("الأربعاء", "Larbaa", 36.5650, 3.1540),
-    "ouled_yaich": ("أولاد يعيش", "Ouled Yaïch", 36.5040, 2.8640),
-    "beni_mered": ("بني مراد", "Béni Mered", 36.5230, 2.8600),
-    "soumaa": ("الصومعة", "Souma", 36.5180, 2.9050),
-    "chrea": ("الشريعة", "Chréa", 36.4250, 2.8780),
-    "mouzaia": ("موزاية", "Mouzaïa", 36.4670, 2.6900),
-    "bougara": ("بوقرة", "Bougara", 36.5420, 3.0810),
-    "el_affroun": ("العفرون", "El Affroun", 36.4700, 2.6250),
-    "oued_alleug": ("وادي العلايق", "Oued El Alleug", 36.5550, 2.7900),
+    "constantine": ("قسنطينة", "Constantine", 36.3650, 6.6147),
+    "ali_mendjeli": ("علي منجلي", "Ali Mendjeli", 36.2480, 6.5670),
+    "el_khroub": ("الخروب", "El Khroub", 36.2630, 6.6930),
+    "ain_smara": ("عين السمارة", "Aïn Smara", 36.2670, 6.5010),
+    "hamma_bouziane": ("حامة بوزيان", "Hamma Bouziane", 36.4120, 6.5970),
+    "didouche_mourad": ("ديدوش مراد", "Didouche Mourad", 36.4520, 6.6370),
+    "zighoud_youcef": ("زيغود يوسف", "Zighoud Youcef", 36.5310, 6.7090),
+    "ibn_ziad": ("ابن زياد", "Ibn Ziad", 36.3790, 6.4730),
+    "ain_abid": ("عين عبيد", "Aïn Abid", 36.2320, 6.9440),
 }
 
 # code, parent office, type, name_ar, name_fr, commune, capacity, bookable spaces, status
 FACILITIES = [
-    ("hall_blida", "opow", "hall", "القاعة المتعددة الرياضات - البليدة", "Salle omnisports - Blida", "blida", 1200, 2, "active"),
-    ("hall_boufarik", "opow", "hall", "القاعة المتعددة الرياضات - بوفاريك", "Salle omnisports - Boufarik", "boufarik", 800, 2, "active"),
-    ("hall_larbaa", "opow", "hall", "القاعة المتعددة الرياضات - الأربعاء", "Salle omnisports - Larbaa", "larbaa", 600, 1, "maintenance"),
-    ("field_ouled_yaich", "opow", "proximity_field", "الملعب الجواري - أولاد يعيش", "Terrain de proximité - Ouled Yaïch", "ouled_yaich", 150, 1, "active"),
-    ("field_beni_mered", "opow", "proximity_field", "الملعب الجواري - بني مراد", "Terrain de proximité - Béni Mered", "beni_mered", 150, 1, "active"),
-    ("field_soumaa", "opow", "proximity_field", "الملعب الجواري - الصومعة", "Terrain de proximité - Souma", "soumaa", 120, 1, "closed"),
-    ("stadium_blida", "opow", "stadium", "الملعب الرئيسي لولاية البليدة", "Stade principal de Blida", "blida", 25000, 1, "active"),
-    ("hostel_chrea", "odej", "youth_hostel", "بيت الشباب - الشريعة", "Auberge de jeunes - Chréa", "chrea", 80, 1, "active"),
-    ("hostel_mouzaia", "odej", "youth_hostel", "بيت الشباب - موزاية", "Auberge de jeunes - Mouzaïa", "mouzaia", 50, 1, "active"),
-    ("complex_bougara", "odej", "proximity_complex", "المركب الرياضي الجواري - بوقرة", "Complexe sportif de proximité - Bougara", "bougara", 300, 2, "active"),
-    ("complex_el_affroun", "odej", "proximity_complex", "المركب الرياضي الجواري - العفرون", "Complexe sportif de proximité - El Affroun", "el_affroun", 250, 2, "maintenance"),
-    ("science_blida", "odej", "science_center", "مركز التسلية العلمية - البليدة", "Centre de loisirs scientifiques - Blida", "blida", 200, 2, "active"),
-    ("dc_blida_01", "odej", "dar_chabab", "دار الشباب - البليدة وسط", "Maison de jeunes - Blida centre", "blida", 300, 3, "active"),
-    ("dc_blida_02", "odej", "dar_chabab", "دار الشباب - بوفاريك", "Maison de jeunes - Boufarik", "boufarik", 250, 3, "active"),
-    ("dc_blida_03", "odej", "dar_chabab", "دار الشباب - الأربعاء", "Maison de jeunes - Larbaa", "larbaa", 220, 2, "active"),
-    ("dc_blida_04", "odej", "dar_chabab", "دار الشباب - وادي العلايق", "Maison de jeunes - Oued El Alleug", "oued_alleug", 180, 2, "active"),
+    ("hall_constantine", "opow", "hall", "القاعة المتعددة الرياضات - قسنطينة", "Salle omnisports - Constantine", "constantine", 1200, 2, "active"),
+    ("hall_ali_mendjeli", "opow", "hall", "القاعة المتعددة الرياضات - علي منجلي", "Salle omnisports - Ali Mendjeli", "ali_mendjeli", 800, 2, "active"),
+    ("hall_el_khroub", "opow", "hall", "القاعة المتعددة الرياضات - الخروب", "Salle omnisports - El Khroub", "el_khroub", 600, 1, "maintenance"),
+    ("field_hamma_bouziane", "opow", "proximity_field", "الملعب الجواري - حامة بوزيان", "Terrain de proximité - Hamma Bouziane", "hamma_bouziane", 150, 1, "active"),
+    ("field_didouche_mourad", "opow", "proximity_field", "الملعب الجواري - ديدوش مراد", "Terrain de proximité - Didouche Mourad", "didouche_mourad", 150, 1, "active"),
+    ("field_ibn_ziad", "opow", "proximity_field", "الملعب الجواري - ابن زياد", "Terrain de proximité - Ibn Ziad", "ibn_ziad", 120, 1, "closed"),
+    ("stadium_constantine", "opow", "stadium", "الملعب الرئيسي لولاية قسنطينة", "Stade principal de Constantine", "constantine", 25000, 1, "active"),
+    ("hostel_constantine", "odej", "youth_hostel", "بيت الشباب - قسنطينة", "Auberge de jeunes - Constantine", "constantine", 80, 1, "active"),
+    ("hostel_zighoud_youcef", "odej", "youth_hostel", "بيت الشباب - زيغود يوسف", "Auberge de jeunes - Zighoud Youcef", "zighoud_youcef", 50, 1, "active"),
+    ("complex_ain_smara", "odej", "proximity_complex", "المركب الرياضي الجواري - عين السمارة", "Complexe sportif de proximité - Aïn Smara", "ain_smara", 300, 2, "active"),
+    ("complex_ain_abid", "odej", "proximity_complex", "المركب الرياضي الجواري - عين عبيد", "Complexe sportif de proximité - Aïn Abid", "ain_abid", 250, 2, "maintenance"),
+    ("science_constantine", "odej", "science_center", "مركز التسلية العلمية - قسنطينة", "Centre de loisirs scientifiques - Constantine", "constantine", 200, 2, "active"),
+    ("dc_constantine_01", "odej", "dar_chabab", "دار الشباب - قسنطينة وسط", "Maison de jeunes - Constantine centre", "constantine", 300, 3, "active"),
+    ("dc_constantine_02", "odej", "dar_chabab", "دار الشباب - علي منجلي", "Maison de jeunes - Ali Mendjeli", "ali_mendjeli", 250, 3, "active"),
+    ("dc_constantine_03", "odej", "dar_chabab", "دار الشباب - الخروب", "Maison de jeunes - El Khroub", "el_khroub", 220, 2, "active"),
+    ("dc_constantine_04", "odej", "dar_chabab", "دار الشباب - حامة بوزيان", "Maison de jeunes - Hamma Bouziane", "hamma_bouziane", 180, 2, "active"),
 ]
 
 # Approximate member counts per facility type (~600 total).
@@ -87,7 +85,7 @@ ACTIVITY_TITLES = {
     "science": [("ورشة الروبوتيك", "Atelier robotique"), ("مسابقة علمية", "Concours scientifique"),
                 ("سهرة فلكية", "Soirée d'astronomie"), ("تجارب الكيمياء الممتعة", "Chimie amusante")],
     "scouting": [("خرجة كشفية", "Sortie scoute"), ("مخيم نهاية الأسبوع", "Camp de week-end"),
-                 ("رحلة استكشافية إلى الشريعة", "Randonnée à Chréa")],
+                 ("رحلة استكشافية إلى غابة جبل الوحش", "Randonnée à la forêt du Djebel El Ouahch")],
     "environment": [("حملة تشجير", "Campagne de reboisement"), ("حملة تنظيف الحي", "Nettoyage du quartier"),
                     ("ورشة إعادة التدوير", "Atelier recyclage")],
     "digital": [("ورشة البرمجة للمبتدئين", "Initiation à la programmation"), ("تكوين في التصميم الرقمي", "Formation en design numérique"),
@@ -105,8 +103,8 @@ SPACE_NAMES = {
 }
 
 REQUESTERS = [
-    "جمعية الأمل للشباب", "النادي الرياضي للهواة البليدة", "جمعية نسيم للثقافة", "الكشافة الإسلامية - فوج الفتح",
-    "جمعية أصدقاء البيئة", "نادي الشطرنج المتيجة", "جمعية الإبداع الفني", "النادي الرياضي لكرة السلة بوفاريك",
+    "جمعية الأمل للشباب", "النادي الرياضي للهواة قسنطينة", "جمعية نسيم للثقافة", "الكشافة الإسلامية - فوج الفتح",
+    "جمعية أصدقاء البيئة", "نادي الشطرنج سيرتا", "جمعية الإبداع الفني", "النادي الرياضي لكرة السلة الخروب",
     "جمعية الشباب الرقمي", "رابطة كرة القدم للأحياء", "مدرسة الكاراتيه الأطلس", "جمعية الأحياء للتضامن",
 ]
 
@@ -236,7 +234,7 @@ def seed() -> None:
 
     db.commit()
     db.close()
-    print("Seeded Blida demo data:", ", ".join(f"{k}={v}" for k, v in counts.items()))
+    print("Seeded Constantine demo data:", ", ".join(f"{k}={v}" for k, v in counts.items()))
 
 
 if __name__ == "__main__":
