@@ -8,10 +8,10 @@ import { cn } from "@/lib/utils";
 import { DemoBadge } from "./demo-badge";
 
 const NAV = [
-  { key: "overview", href: "/", icon: LayoutDashboard },
-  { key: "facilities", href: "/#facilities", icon: Building2 },
-  { key: "members", icon: Users },
-  { key: "activities", icon: Activity },
+  { key: "overview", href: "/", icon: LayoutDashboard, match: (p) => p === "/" },
+  { key: "facilities", href: "/#facilities", icon: Building2, match: (p) => p.startsWith("/facilities") },
+  { key: "members", href: "/members", icon: Users, match: (p) => p.startsWith("/members") },
+  { key: "activities", href: "/activities", icon: Activity, match: (p) => p.startsWith("/activities") },
   { key: "bookings", icon: CalendarCheck },
   { key: "psych", icon: HeartHandshake },
 ];
@@ -49,7 +49,7 @@ export function SidebarContent({ onNavigate }) {
               </span>
             );
           }
-          const active = item.href === "/" ? pathname === "/" : pathname.startsWith("/facilities");
+          const active = item.match(pathname);
           return (
             <Link
               key={item.key}

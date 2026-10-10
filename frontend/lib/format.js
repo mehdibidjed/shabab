@@ -16,10 +16,13 @@ export function fmtMonth(key, locale, style = "short") {
   return new Intl.DateTimeFormat(INTL[locale], { month: style, timeZone: "UTC" }).format(Date.UTC(y, m - 1, 1));
 }
 
-export function fmtDate(iso, locale) {
-  return new Intl.DateTimeFormat(INTL[locale], { day: "numeric", month: "short", timeZone: "UTC" }).format(
-    new Date(iso),
-  );
+export function fmtDate(iso, locale, withYear = false) {
+  return new Intl.DateTimeFormat(INTL[locale], {
+    day: "numeric",
+    month: "short",
+    year: withYear ? "numeric" : undefined,
+    timeZone: "UTC",
+  }).format(new Date(iso));
 }
 
 /** Pick the localized name: Arabic for ar, French for fr/en (no English names in the data). */

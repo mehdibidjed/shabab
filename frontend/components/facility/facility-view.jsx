@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LegendItem } from "@/components/shared/chart-card";
+import { AgeBands, GenderSplit } from "@/components/shared/gender-split";
 import { PageHeader } from "@/components/shared/page-header";
 import { ErrorState } from "@/components/shared/states";
 import { StatusChip } from "@/components/shared/status-chip";
@@ -23,6 +23,15 @@ function BackLink() {
     <Link href="/" className="inline-flex w-fit items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
       <ArrowLeft className="size-4 rtl:-scale-x-100" />
       {t("back")}
+    </Link>
+  );
+}
+
+function ViewAll({ href, label }) {
+  return (
+    <Link href={href} className="inline-flex w-fit items-center gap-1 text-sm font-medium text-primary hover:underline">
+      {label}
+      <ArrowLeft className="size-4 ltr:rotate-180" />
     </Link>
   );
 }
@@ -73,8 +82,6 @@ export function FacilityView({ id }) {
   }
 
   const ms = f.member_stats;
-  const maxBand = Math.max(1, ...Object.values(ms.age_bands));
-  const genderTotal = Math.max(1, ms.male + ms.female);
 
   return (
     <div className="flex flex-col gap-4 md:gap-6">
@@ -131,43 +138,12 @@ export function FacilityView({ id }) {
               <p className="text-sm text-muted-foreground">—</p>
             ) : (
               <>
-                <div className="flex flex-col gap-2">
-                  <div
-                    className="flex h-3 gap-0.5 overflow-hidden rounded-full"
-                    role="img"
-                    aria-label={`${t("facility.male")} ${ms.male}, ${t("facility.female")} ${ms.female}`}
-                  >
-                    <span className="bg-series-1" style={{ width: `${(100 * ms.male) / genderTotal}%` }} />
-                    <span className="bg-series-2" style={{ width: `${(100 * ms.female) / genderTotal}%` }} />
-                  </div>
-                  <div className="flex gap-4">
-                    <LegendItem
-                      color="var(--series-1)"
-                      label={`${t("facility.male")} · ${fmtNumber(ms.male, locale)}`}
-                    />
-                    <LegendItem
-                      color="var(--series-2)"
-                      label={`${t("facility.female")} · ${fmtNumber(ms.female, locale)}`}
-                    />
-                  </div>
-                </div>
+                <GenderSplit male={ms.male} female={ms.female} />
                 <div className="flex flex-col gap-2">
                   <span className="text-xs font-medium text-muted-foreground">{t("facility.ageBands")}</span>
-                  {Object.entries(ms.age_bands).map(([band, n]) => (
-                    <div key={band} className="flex items-center gap-2 text-xs">
-                      <span dir="ltr" className="w-12 shrink-0 text-start tabular-nums text-muted-foreground">
-                        {band}
-                      </span>
-                      <span className="h-2 flex-1 rounded-full bg-muted">
-                        <span
-                          className="block h-full rounded-full bg-series-1"
-                          style={{ width: `${(100 * n) / maxBand}%` }}
-                        />
-                      </span>
-                      <span className="w-8 text-end tabular-nums">{fmtNumber(n, locale)}</span>
-                    </div>
-                  ))}
+                  <AgeBands bands={ms.age_bands} />
                 </div>
+                <ViewAll href={`/members?facility=${f.id}`} label={t("facility.viewAllMembers")} />
               </>
             )}
           </CardContent>
@@ -197,6 +173,11 @@ export function FacilityView({ id }) {
                   </li>
                 ))}
               </ul>
+            )}
+            {f.recent_activities.length > 0 && (
+              <div className="pt-3">
+                <ViewAll href={`/activities?facility=${f.id}`} label={t("facility.viewAllActivities")} />
+              </div>
             )}
           </CardContent>
         </Card>

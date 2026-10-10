@@ -72,7 +72,8 @@ function RoleSwitcher() {
             onValueChange={(v) => {
               setUser(v);
               // A facility page may be out of the new scope; go back to the overview.
-              if (pathname !== "/") router.push("/");
+              // Other pages refetch in place (their filters reset with the role).
+              if (pathname.startsWith("/facilities/")) router.push("/");
             }}
           >
             {DEMO_USERS.map((k) => (

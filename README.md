@@ -38,9 +38,11 @@ Re-run `python -m app.seed` on another day to keep "this month" figures fresh.
 1. Open http://localhost:3000. It starts in **Arabic (RTL)** as the **DJS director**: 16 facilities, KPIs, charts, org tree and facilities table.
 2. **Switch role** (top bar): OPOW director → 7 sports facilities only; ODEJ director → 9 youth establishments; Dar Chabab director → a single center; Wali inspector → everything, read-only.
 3. In the **org tree**, click an office (OPOW/ODEJ) to filter the table; click a facility to drill down.
-4. Open a **Dar Chabab** to see its internal staff structure (director → counselors, head educator → educators, administrators, workers), member stats, recent activities and upcoming bookings.
-5. Click **توليد الرؤى (Generate insights)** for three findings about the current scope.
-6. Switch language (ar / fr / en) and theme (light / dark) from the top bar; resize to phone width (the sidebar becomes a drawer).
+4. Open **Members** (sidebar): registrations per month, gender/age composition, members per facility (click a bar to filter), and a searchable, filterable, paginated register.
+5. Open **Activities**: month-to-date vs last month, typical attendance, activities per month, by category and by facility (click to filter), and the activity log with search, category, facility and month filters.
+6. Open a **Dar Chabab** to see its internal staff structure (director → counselors, head educator → educators, administrators, workers), member stats, recent activities and upcoming bookings.
+7. Click **توليد الرؤى (Generate insights)** for three findings about the current scope.
+8. Switch language (ar / fr / en) and theme (light / dark) from the top bar; resize to phone width (the sidebar becomes a drawer).
 
 ## API
 
@@ -54,6 +56,10 @@ All endpoints read the `X-Demo-User` header (`djs_director` by default; also `op
 | GET | `/api/dashboard/kpis` | facilities, active members, activities this month, booking occupancy |
 | GET | `/api/dashboard/trends` | members & activities per month, activities by category, facilities by type |
 | GET | `/api/facilities?type=` | facilities with status, members, 30-day activity and occupancy |
+| GET | `/api/members?facility_id=&gender=&age_band=&status=&q=&page=&page_size=` | paginated member register |
+| GET | `/api/members/stats` | totals, gender, age bands, new members per month (12), members per facility |
+| GET | `/api/activities?category=&facility_id=&month=YYYY-MM&q=&page=&page_size=` | paginated activity log |
+| GET | `/api/activities/stats` | month to date vs last month, median attendance, per month / category / facility |
 | GET | `/api/facilities/{id}` | detail incl. staff hierarchy, member stats, recent activities (404 if out of scope) |
 | POST | `/api/ai/insights` | `{"locale": "ar"\|"fr"\|"en"}` → 3 insights (`source`: `deepseek` or `demo`) |
 

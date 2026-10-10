@@ -17,6 +17,8 @@ Short record of the main choices and why. Prototype first: simple, demo-ready, e
   The UI groups people by position to keep the chart readable on a phone.
 - **Seed data is relative to today** with a fixed random seed, so "this month" is never empty and
   numbers are reproducible for a given day. Names are fictional; communes are real communes of Constantine.
+- **Members have fictional, gender-matched names and a member number** (`M-00042`), generated
+  from a separate random generator so adding them did not change any other seeded figure.
 - **Occupancy** = booked slots ÷ (bookable spaces × 3 daily slots × days), excluding closed facilities.
 
 ## Access & scope
@@ -64,6 +66,19 @@ Short record of the main choices and why. Prototype first: simple, demo-ready, e
 - **Responsive**: sidebar ≥ 1024px, drawer below (opens from the start side); the facilities
   table becomes cards below 768px; the org chart switches from a horizontal bus to a vertical spine.
   Verified at 380px and 1440px in light and dark mode.
+
+## Members & activities pages
+
+- **Server-side filtering and pagination** (`Page[T]`, 20 per page): lists will grow, and every
+  filter runs through the same `Scope.filter`, so a facility id from another scope simply returns
+  nothing. The UI also drops such an id (e.g. a shared link opened under another role) back to "all".
+- **Charts double as filters**: clicking a facility or category bar filters the list below; the
+  facility page links to both pages pre-filtered (`?facility=<id>`).
+- **Median, not mean, for attendance**: stadium events (thousands of spectators) would make an
+  average meaningless next to 20-person workshops.
+- **Minors share** is shown on the members page: it matters for Module 2, where minors' case
+  files need guardian consent.
+- The current (partial) month is drawn lighter in monthly charts and labelled as incomplete.
 
 ## Not in v1 (on purpose)
 
