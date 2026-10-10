@@ -1,0 +1,184 @@
+{
+  "app": {
+    "name": "منصة شباب",
+    "wilaya": "ولاية البليدة",
+    "demoBadge": "بيانات تجريبية",
+    "demoBadgeHint": "كل الأسماء والأرقام وهمية لأغراض العرض"
+  },
+  "nav": {
+    "overview": "نظرة عامة",
+    "facilities": "المرافق",
+    "members": "المنخرطون",
+    "activities": "النشاطات",
+    "bookings": "الحجوزات",
+    "psych": "الإرشاد والمتابعة النفسية",
+    "soon": "قريبًا",
+    "openMenu": "فتح القائمة",
+    "menu": "القائمة"
+  },
+  "topbar": {
+    "role": "المستخدم التجريبي",
+    "switchRole": "تغيير الدور",
+    "scope": "النطاق",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "حسب النظام",
+    "readOnly": "قراءة فقط"
+  },
+  "roles": {
+    "djs_director": "مدير الشباب والرياضة",
+    "opow_director": "مدير ديوان المركب المتعدد الرياضات",
+    "odej_director": "مدير ديوان مؤسسات الشباب",
+    "dc_director": "مدير دار الشباب",
+    "wali_inspector": "مفتش الولاية"
+  },
+  "overview": {
+    "title": "نظرة عامة",
+    "subtitle": "مؤشرات قطاع الشباب والرياضة ضمن نطاقك"
+  },
+  "kpi": {
+    "facilities": "المرافق",
+    "facilitiesActive": "{active} في الخدمة",
+    "activeMembers": "المنخرطون النشطون",
+    "newThisMonth": "+{n} هذا الشهر",
+    "activitiesMonth": "نشاطات هذا الشهر",
+    "vsLastMonth": "{delta} مقارنة بنفس الفترة من الشهر الماضي",
+    "occupancy": "نسبة شغل الحجوزات",
+    "occupancyLast": "الشهر الماضي: {pct}",
+    "noChange": "دون تغيير"
+  },
+  "charts": {
+    "members": "تطور عدد المنخرطين",
+    "membersSub": "إجمالي المسجلين في آخر 6 أشهر",
+    "totalMembers": "إجمالي المنخرطين",
+    "newMembers": "منخرطون جدد",
+    "byCategory": "النشاطات حسب الفئة",
+    "byCategorySub": "عدد النشاطات في آخر 6 أشهر",
+    "activities": "النشاطات",
+    "attendees": "المشاركون",
+    "byType": "المرافق حسب النوع",
+    "byTypeSub": "حسب الديوان المشرف",
+    "count": "العدد",
+    "month": "الشهر",
+    "category": "الفئة",
+    "type": "النوع",
+    "showTable": "عرض كجدول",
+    "showChart": "عرض كمخطط",
+    "partialMonth": "الشهر الجاري غير مكتمل"
+  },
+  "categories": {
+    "sport": "الرياضة",
+    "culture": "الثقافة",
+    "science": "العلوم",
+    "scouting": "الكشافة",
+    "environment": "البيئة",
+    "digital": "الرقمنة"
+  },
+  "types": {
+    "djs": "مديرية",
+    "opow": "ديوان",
+    "odej": "ديوان",
+    "hall": "قاعة متعددة الرياضات",
+    "proximity_field": "ملعب جواري",
+    "stadium": "ملعب رئيسي",
+    "youth_hostel": "بيت الشباب",
+    "proximity_complex": "مركب رياضي جواري",
+    "science_center": "مركز التسلية العلمية",
+    "dar_chabab": "دار الشباب"
+  },
+  "offices": {
+    "opow": "ديوان المركب المتعدد الرياضات",
+    "odej": "ديوان مؤسسات الشباب",
+    "opowShort": "OPOW",
+    "odejShort": "ODEJ"
+  },
+  "status": {
+    "active": "في الخدمة",
+    "maintenance": "قيد الصيانة",
+    "closed": "مغلق"
+  },
+  "tree": {
+    "title": "الهيكل التنظيمي",
+    "subtitle": "انقر على مرفق لعرض تفاصيله",
+    "members": "{n} منخرط",
+    "expand": "توسيع",
+    "collapse": "طي"
+  },
+  "table": {
+    "title": "المرافق",
+    "filterType": "تصفية حسب النوع",
+    "allTypes": "كل الأنواع",
+    "name": "المرفق",
+    "type": "النوع",
+    "office": "الديوان",
+    "commune": "البلدية",
+    "status": "الحالة",
+    "members": "المنخرطون",
+    "activities30d": "نشاطات (30 يومًا)",
+    "occupancy": "الشغل (30 يومًا)",
+    "empty": "لا توجد مرافق من هذا النوع ضمن نطاقك",
+    "count": "عدد المرافق: {n}",
+    "open": "عرض"
+  },
+  "ai": {
+    "title": "رؤى الذكاء الاصطناعي",
+    "subtitle": "ثلاث ملاحظات مستخلصة من بيانات نطاقك",
+    "generate": "توليد الرؤى",
+    "regenerate": "إعادة التوليد",
+    "loading": "جارٍ التحليل…",
+    "empty": "اضغط على الزر لتحليل المؤشرات الحالية.",
+    "sourceDeepseek": "مولَّد بواسطة DeepSeek",
+    "sourceDemo": "استجابة تجريبية (دون اتصال)",
+    "unavailable": "تعذّر الاتصال بخدمة الذكاء الاصطناعي، تُعرض استجابة تجريبية.",
+    "disclaimer": "اقتراحات آلية للمساعدة على القرار، تتطلب التحقق.",
+    "error": "حدث خطأ أثناء توليد الرؤى."
+  },
+  "facility": {
+    "back": "العودة إلى النظرة العامة",
+    "office": "الديوان المشرف",
+    "commune": "البلدية",
+    "capacity": "طاقة الاستيعاب",
+    "staffStructure": "الهيكل التنظيمي الداخلي",
+    "staffStructureSub": "{n} موظفًا",
+    "staff": "المستخدمون",
+    "members": "المنخرطون",
+    "activeOf": "{active} نشط من أصل {total}",
+    "male": "ذكور",
+    "female": "إناث",
+    "ageBands": "الفئات العمرية",
+    "years": "سنة",
+    "recentActivities": "آخر النشاطات",
+    "upcomingBookings": "الحجوزات القادمة",
+    "noActivities": "لا توجد نشاطات مسجلة",
+    "noBookings": "لا توجد حجوزات قادمة",
+    "attendees": "{n} مشارك",
+    "activities30d": "نشاطات (30 يومًا)",
+    "occupancy30d": "الشغل (30 يومًا)",
+    "notFound": "المرفق غير موجود",
+    "notFoundHint": "هذا المرفق غير موجود أو خارج نطاق صلاحياتك الحالية."
+  },
+  "slots": {
+    "morning": "صباحًا",
+    "afternoon": "بعد الظهر",
+    "evening": "مساءً"
+  },
+  "positions": {
+    "director": "مدير المؤسسة",
+    "counselor": "مستشار",
+    "head_educator": "مربٍّ رئيسي",
+    "educator": "مربٍّ",
+    "secretariat": "الأمانة العامة",
+    "finance_admin": "متصرف الشؤون المالية",
+    "coordination_admin": "متصرف التنسيق",
+    "associations_admin": "متصرف النشاطات الجمعوية والرياضية",
+    "activities_admin": "متصرف نشاطات المؤسسة",
+    "professional_worker": "عامل مهني"
+  },
+  "common": {
+    "loading": "جارٍ التحميل…",
+    "error": "تعذّر تحميل البيانات. تأكد من تشغيل الخادم.",
+    "retry": "إعادة المحاولة"
+  }
+}

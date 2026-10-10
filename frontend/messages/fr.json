@@ -1,0 +1,184 @@
+{
+  "app": {
+    "name": "Plateforme Shabab",
+    "wilaya": "Wilaya de Blida",
+    "demoBadge": "Données de démo",
+    "demoBadgeHint": "Tous les noms et chiffres sont fictifs"
+  },
+  "nav": {
+    "overview": "Vue d'ensemble",
+    "facilities": "Établissements",
+    "members": "Adhérents",
+    "activities": "Activités",
+    "bookings": "Réservations",
+    "psych": "Suivi psychologique",
+    "soon": "Bientôt",
+    "openMenu": "Ouvrir le menu",
+    "menu": "Menu"
+  },
+  "topbar": {
+    "role": "Utilisateur de démo",
+    "switchRole": "Changer de rôle",
+    "scope": "Périmètre",
+    "language": "Langue",
+    "theme": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système",
+    "readOnly": "Lecture seule"
+  },
+  "roles": {
+    "djs_director": "Directeur de la Jeunesse et des Sports",
+    "opow_director": "Directeur de l'OPOW",
+    "odej_director": "Directeur de l'ODEJ",
+    "dc_director": "Directeur de maison de jeunes",
+    "wali_inspector": "Inspecteur de la wilaya"
+  },
+  "overview": {
+    "title": "Vue d'ensemble",
+    "subtitle": "Indicateurs du secteur Jeunesse et Sports dans votre périmètre"
+  },
+  "kpi": {
+    "facilities": "Établissements",
+    "facilitiesActive": "{active} en service",
+    "activeMembers": "Adhérents actifs",
+    "newThisMonth": "+{n} ce mois-ci",
+    "activitiesMonth": "Activités ce mois-ci",
+    "vsLastMonth": "{delta} vs même période du mois dernier",
+    "occupancy": "Taux d'occupation",
+    "occupancyLast": "Mois dernier : {pct}",
+    "noChange": "Stable"
+  },
+  "charts": {
+    "members": "Évolution des adhérents",
+    "membersSub": "Total des inscrits sur 6 mois",
+    "totalMembers": "Total adhérents",
+    "newMembers": "Nouveaux adhérents",
+    "byCategory": "Activités par catégorie",
+    "byCategorySub": "Nombre d'activités sur 6 mois",
+    "activities": "Activités",
+    "attendees": "Participants",
+    "byType": "Établissements par type",
+    "byTypeSub": "Par office de tutelle",
+    "count": "Nombre",
+    "month": "Mois",
+    "category": "Catégorie",
+    "type": "Type",
+    "showTable": "Voir le tableau",
+    "showChart": "Voir le graphique",
+    "partialMonth": "Mois en cours incomplet"
+  },
+  "categories": {
+    "sport": "Sport",
+    "culture": "Culture",
+    "science": "Sciences",
+    "scouting": "Scoutisme",
+    "environment": "Environnement",
+    "digital": "Numérique"
+  },
+  "types": {
+    "djs": "Direction",
+    "opow": "Office",
+    "odej": "Office",
+    "hall": "Salle omnisports",
+    "proximity_field": "Terrain de proximité",
+    "stadium": "Stade principal",
+    "youth_hostel": "Auberge de jeunes",
+    "proximity_complex": "Complexe sportif de proximité",
+    "science_center": "Centre de loisirs scientifiques",
+    "dar_chabab": "Maison de jeunes"
+  },
+  "offices": {
+    "opow": "Office du Parc Omnisports",
+    "odej": "Office des Établissements de Jeunes",
+    "opowShort": "OPOW",
+    "odejShort": "ODEJ"
+  },
+  "status": {
+    "active": "En service",
+    "maintenance": "En maintenance",
+    "closed": "Fermé"
+  },
+  "tree": {
+    "title": "Organigramme",
+    "subtitle": "Cliquez sur un établissement pour voir le détail",
+    "members": "{n} adhérents",
+    "expand": "Déplier",
+    "collapse": "Replier"
+  },
+  "table": {
+    "title": "Établissements",
+    "filterType": "Filtrer par type",
+    "allTypes": "Tous les types",
+    "name": "Établissement",
+    "type": "Type",
+    "office": "Office",
+    "commune": "Commune",
+    "status": "Statut",
+    "members": "Adhérents",
+    "activities30d": "Activités (30 j)",
+    "occupancy": "Occupation (30 j)",
+    "empty": "Aucun établissement de ce type dans votre périmètre",
+    "count": "{n} établissements",
+    "open": "Voir"
+  },
+  "ai": {
+    "title": "Analyses IA",
+    "subtitle": "Trois constats tirés des données de votre périmètre",
+    "generate": "Générer les analyses",
+    "regenerate": "Régénérer",
+    "loading": "Analyse en cours…",
+    "empty": "Cliquez pour analyser les indicateurs actuels.",
+    "sourceDeepseek": "Généré par DeepSeek",
+    "sourceDemo": "Réponse de démonstration (hors ligne)",
+    "unavailable": "Service IA indisponible, réponse de démonstration affichée.",
+    "disclaimer": "Suggestions automatiques d'aide à la décision, à vérifier.",
+    "error": "Erreur lors de la génération des analyses."
+  },
+  "facility": {
+    "back": "Retour à la vue d'ensemble",
+    "office": "Office de tutelle",
+    "commune": "Commune",
+    "capacity": "Capacité",
+    "staffStructure": "Organigramme interne",
+    "staffStructureSub": "{n} agents",
+    "staff": "Personnel",
+    "members": "Adhérents",
+    "activeOf": "{active} actifs sur {total}",
+    "male": "Garçons",
+    "female": "Filles",
+    "ageBands": "Tranches d'âge",
+    "years": "ans",
+    "recentActivities": "Activités récentes",
+    "upcomingBookings": "Prochaines réservations",
+    "noActivities": "Aucune activité enregistrée",
+    "noBookings": "Aucune réservation à venir",
+    "attendees": "{n} participants",
+    "activities30d": "Activités (30 j)",
+    "occupancy30d": "Occupation (30 j)",
+    "notFound": "Établissement introuvable",
+    "notFoundHint": "Cet établissement n'existe pas ou est hors de votre périmètre."
+  },
+  "slots": {
+    "morning": "Matin",
+    "afternoon": "Après-midi",
+    "evening": "Soir"
+  },
+  "positions": {
+    "director": "Directeur",
+    "counselor": "Conseiller",
+    "head_educator": "Éducateur principal",
+    "educator": "Éducateur",
+    "secretariat": "Secrétariat général",
+    "finance_admin": "Administrateur des finances",
+    "coordination_admin": "Administrateur de coordination",
+    "associations_admin": "Administrateur des activités associatives et sportives",
+    "activities_admin": "Administrateur des activités",
+    "professional_worker": "Ouvrier professionnel"
+  },
+  "common": {
+    "loading": "Chargement…",
+    "error": "Impossible de charger les données. Vérifiez que le serveur est lancé.",
+    "retry": "Réessayer"
+  }
+}

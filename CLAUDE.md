@@ -86,6 +86,7 @@ Features:
 
 ## How to run (keep this section updated)
 ```
-cd backend && pip install -r requirements.txt && python -m app.seed && uvicorn app.main:app --reload
+cd backend && python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && python -m app.seed && uvicorn app.main:app --reload
 cd frontend && npm install && npm run dev
 ```
+Optional: `DEEPSEEK_API_KEY` for live AI insights (offline demo insights otherwise). Details in README.md.
