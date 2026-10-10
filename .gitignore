@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+backend/shabab.db
+.env
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+.env*.local
