@@ -1,9 +1,12 @@
+import { MANAGEMENT_USERS } from "@/lib/demo-users";
+import { requireUsers } from "@/lib/guard";
 import { getTranslations } from "next-intl/server";
 import { ActivitiesView } from "@/components/activities/activities-view";
 import { PageHeader } from "@/components/shared/page-header";
 import { ScopeLine } from "@/components/shared/scope-line";
 
 export default async function ActivitiesPage({ searchParams }) {
+  await requireUsers(MANAGEMENT_USERS);
   const { facility, category } = await searchParams;
   const t = await getTranslations("activitiesPage");
   return (

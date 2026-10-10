@@ -87,6 +87,9 @@ Features:
 ## How to run (keep this section updated)
 ```
 cd backend && python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && python -m app.seed && uvicorn app.main:app --reload
+cd backend && pytest        # Module 2 privacy tests
 cd frontend && npm install && npm run dev
 ```
-Optional: `DEEPSEEK_API_KEY` for live AI insights (offline demo insights otherwise). Details in README.md.
+Optional: `DEEPSEEK_API_KEY` for live AI insights (offline demo insights otherwise); `CASE_KEY`
+(Fernet key) for Module 2 encryption — without it a dev key is generated in `backend/.case_key`.
+Details in README.md.

@@ -25,6 +25,24 @@ export function fmtDate(iso, locale, withYear = false) {
   }).format(new Date(iso));
 }
 
+export function fmtDateTime(iso, locale) {
+  return new Intl.DateTimeFormat(INTL[locale], {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(iso));
+}
+
+export function fmtTime(iso, locale) {
+  return new Intl.DateTimeFormat(INTL[locale], { hour: "2-digit", minute: "2-digit" }).format(new Date(iso));
+}
+
+export function fmtDay(iso, locale) {
+  return new Intl.DateTimeFormat(INTL[locale], { weekday: "long", day: "numeric", month: "long" }).format(new Date(iso));
+}
+
 /** Pick the localized name: Arabic for ar, French for fr/en (no English names in the data). */
 export function pick(obj, base, locale) {
   return String(obj[`${base}_${locale === "ar" ? "ar" : "fr"}`] ?? "");

@@ -80,7 +80,43 @@ Short record of the main choices and why. Prototype first: simple, demo-ready, e
   files need guardian consent.
 - The current (partial) month is drawn lighter in monthly charts and labelled as incomplete.
 
+## Module 2 — Psychological care & prevention
+
+Privacy rules come from CLAUDE.md; Algeria's **Law 18-07** treats health data as sensitive
+(HIPAA used only as a design mindset). Choices:
+
+- **One policy module** (`app/modules/psych/policy.py`) decides access; every service function
+  calls it, so the rules hold whatever router or job calls the service. `pytest` (33 tests,
+  `backend/tests/`) proves them against the API: director, DJS, Wali and OPOW/ODEJ get **403 on
+  every case-file endpoint** and only aggregates elsewhere.
+- **403 before lookup for roles that may never read case files; 404 for another psychologist**,
+  so a case's existence doesn't leak. Formal transfer moves ownership (and read access).
+- **Field-level encryption at rest** (Fernet, `CASE_KEY`) for session notes, assessment answers,
+  plans and parent reports. A dev key file is generated when `CASE_KEY` is missing so the demo
+  runs with zero setup; production must use a managed secret.
+- **Access log** records every read *and every refused attempt naming a case* — the owning
+  psychologist sees, e.g., "DJS director — refused attempt".
+- **Audience-specific schemas**: the educator's referral schema and the guidance schema simply
+  have no field that could carry clinical content or a case id; parents get a separate
+  `SharedReport` built only from reports explicitly shared about their own child.
+- **Minors**: notes, assessments and plans are refused (409) until guardian consent is recorded.
+- **Small-count suppression**: aggregated counts of 1–4 are returned as `"<5"` (0 stays 0: it
+  identifies nobody). The UI shows "أقل من 5 / fewer than 5" rather than "<5", which would be
+  mirrored in RTL.
+- **Management roles only for dashboards and registers**: once parents and young members could
+  log in, the member register (minors' names) had to be closed to them; Module 2 roles get their
+  own workspaces, guarded both in the API and in server-side page redirects.
+- **Attendance-drop alert = participation-rate drop**: per member, activities attended ÷
+  activities their center offered, last 4 weeks vs the 4 before; flag if it falls by > 50%,
+  with ≥ 4 attendances and ≥ 4 activities offered in each window. Counting raw attendance flagged
+  whole centers whenever they simply ran fewer activities. Runs from the seed (nightly job later).
+- **Demo identities**: `demo_key` on Staff/Member links demo users to real seeded people (the
+  psychologist is a staff member of the Dar Chabab, shown in its org chart). Prototype only.
+- **Published prevention programs become `prevention` activities** in the center's calendar (and
+  in activity statistics), linked by `program_id`.
+- **Seed**: generic, fictional wording only; one minor's case deliberately awaits consent.
+
 ## Not in v1 (on purpose)
 
-Real authentication, write operations, pagination, maps, tests beyond curl/browser smoke checks,
-and Module 2 (psychological care & prevention) — see `CLAUDE.md`.
+Real authentication, maps, case-file transfer UI, notifications (e-mail/SMS), and a scheduled
+alert job — see `CLAUDE.md`.

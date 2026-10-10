@@ -1,7 +1,8 @@
 # Shabab Platform — prototype (منصة شباب)
 
 Clickable prototype of a management platform for the Youth & Sports sector of an Algerian
-wilaya, starting from the **Directorate of Youth & Sports (DJS)** dashboard. All data is
+wilaya: the **Directorate of Youth & Sports (DJS)** dashboard, and **Module 2 — Psychological
+Care & Prevention** (مصلحة الإرشاد والمتابعة النفسية) inside the youth centers. All data is
 **fictional** (wilaya of Constantine — قسنطينة) and the UI is labelled "بيانات تجريبية / Demo data".
 
 - `backend/` — FastAPI + SQLAlchemy 2 + SQLite (`backend/shabab.db`)
@@ -19,6 +20,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python -m app.seed                 # (re)creates shabab.db with demo data relative to today
 uvicorn app.main:app --reload
+pytest                             # Module 2 privacy tests (throwaway DB and key)
 
 # 2. Frontend → http://localhost:3000  (in another terminal)
 cd frontend
@@ -29,6 +31,9 @@ npm run dev
 Optional: `export DEEPSEEK_API_KEY=...` before starting the backend to get live AI insights
 from DeepSeek. Without a key (or if the call fails) the backend returns rule-based insights
 computed from the same data, clearly labelled "استجابة تجريبية / Demo response".
+Confidential Module 2 fields are encrypted with the key in `CASE_KEY` (a Fernet key:
+`python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"`).
+Without it, a development key is generated in `backend/.case_key` (gitignored) — demo only.
 If the backend is not on `localhost:8000`, set `NEXT_PUBLIC_API_URL` (see `frontend/.env.example`).
 
 Re-run `python -m app.seed` on another day to keep "this month" figures fresh.
@@ -44,10 +49,20 @@ Re-run `python -m app.seed` on another day to keep "this month" figures fresh.
 7. Click **توليد الرؤى (Generate insights)** for three findings about the current scope.
 8. Switch language (ar / fr / en) and theme (light / dark) from the top bar; resize to phone width (the sidebar becomes a drawer).
 
+### Module 2 — psychological care (switch role to the "الإرشاد والمتابعة النفسية" / "الأسر والشباب" groups)
+
+9. As **DJS / director / Wali**: the overview's **الدعم النفسي** card shows aggregated, anonymous numbers only (counts below 5 show as "أقل من 5"). Opening any case file is refused (403).
+10. As the **psychologist** (Dar Chabab Constantine centre): the inbox lists alerts (attendance drop, educator flag, parent request) and referrals; reply with pedagogical guidance or open a case. Case files have tabs for sessions, assessments, plan, parent reports and the **access log**. Every confidential field shows 🔒 "سري — مرئي للنفساني فقط". A minor's file stays locked until guardian consent is recorded. Publish a prevention program to the center's calendar.
+11. As the **educator**: refer a young person (tick "aggressive behavior" to alert the psychologist immediately) and read the guidance received — never any clinical content.
+12. As the **parent**: read the reports the psychologist shared about your child, request a meeting.
+13. As the **young member**: book a confidential listening appointment.
+
 ## API
 
 All endpoints read the `X-Demo-User` header (`djs_director` by default; also `opow_director`,
-`odej_director`, `dc_director`, `wali_inspector`) and only return data within that user's scope.
+`odej_director`, `dc_director`, `wali_inspector`, `psychologist`, `educator`, `parent`,
+`young_member`; `psychologist_b` exists for tests) and only return data within that user's scope.
+Dashboard, register and AI endpoints are for management roles only (others get 403).
 
 | Method | Path | Description |
 |---|---|---|
@@ -66,3 +81,19 @@ All endpoints read the `X-Demo-User` header (`djs_director` by default; also `op
 ```bash
 curl -H "X-Demo-User: opow_director" localhost:8000/api/dashboard/kpis
 ```
+
+### Module 2 (`/api/psych/...`) — who can call what
+
+| Path | Allowed |
+|---|---|
+| `GET stats` | management roles + psychologist — anonymous aggregates, 1–4 shown as `"<5"` |
+| `GET calendar` | everyone attached to a center — upcoming prevention sessions |
+| `GET alerts`, `PATCH alerts/{id}` | psychologist (own center) |
+| `GET/POST cases`, `GET/PATCH cases/{id}`, `POST cases/{id}/consent`, `POST cases/{id}/transfer` | **owning psychologist only** (others: 403, another psychologist: 404) |
+| `GET/POST cases/{id}/sessions` · `assessments` · `GET/PUT plan` · `parent-reports` · `GET access-log` | owning psychologist only; minors need recorded consent first (409) |
+| `GET referrals/received`, `POST referrals/{id}/received`, `POST referrals/{id}/guidance` | psychologist |
+| `GET/POST/PATCH appointments`, `GET/POST/PUT programs`, `POST programs/{id}/publish` | psychologist |
+| `GET members?q=` | psychologist, educator (own center) |
+| `GET/POST referrals` | educator — status + guidance only |
+| `GET parent/child`, `GET parent/reports`, `GET/POST parent/meeting-requests` | parent — own child, shared reports only |
+| `GET youth/slots`, `GET/POST youth/appointments`, `POST youth/appointments/{id}/cancel` | young member — self only |

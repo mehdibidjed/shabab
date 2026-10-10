@@ -155,7 +155,7 @@ def seed_psych(db: DbSession, today: dt.date) -> dict[str, int]:
                      closed_at=today - dt.timedelta(days=10) if status == "closed" else None)
         if minor and consent:
             c.guardian_consent_at = dt.datetime.combine(opened, dt.time(10))
-            c.guardian_name = "وليّ الأمر (بيانات تجريبية)"
+            c.guardian_name = "وليّ أمر تجريبي"
         db.add(c)
         db.flush()
         if minor and not consent:

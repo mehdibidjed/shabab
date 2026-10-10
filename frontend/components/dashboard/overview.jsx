@@ -8,6 +8,7 @@ import { CategoryChart, FacilityTypeChart, MembersChart } from "./charts";
 import { FacilitiesTable } from "./facilities-table";
 import { KpiCards } from "./kpi-cards";
 import { OrgTree } from "./org-tree";
+import { PsychSupportCard } from "./psych-support-card";
 
 export function Overview() {
   const { user } = useDemoUser();
@@ -28,9 +29,10 @@ function OverviewContent() {
         <MembersChart className="lg:col-span-2" />
         <AiInsights />
       </div>
-      <div className="grid gap-4 md:gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 md:gap-6 lg:grid-cols-2 xl:grid-cols-3">
         <CategoryChart />
         <FacilityTypeChart />
+        <PsychSupportCard className="lg:col-span-2 xl:col-span-1" />
       </div>
       <div className="grid items-start gap-4 md:gap-6 lg:grid-cols-3">
         <OrgTree selectedPath={office} onSelectOffice={setOffice} />

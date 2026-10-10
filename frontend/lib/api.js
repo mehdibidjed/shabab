@@ -105,5 +105,5 @@ export async function api(path, user, init) {
     headers: { "Content-Type": "application/json", "X-Demo-User": user, ...init?.headers },
   });
   if (!res.ok) throw new ApiError(res.status, await res.text());
-  return res.json();
+  return res.status === 204 ? null : res.json();
 }

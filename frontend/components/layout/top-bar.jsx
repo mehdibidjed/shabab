@@ -4,7 +4,7 @@ import { Check, Eye, Languages, Monitor, Moon, Sun, UserRound } from "lucide-rea
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { useSyncExternalStore } from "react";
+import { Fragment, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -20,7 +20,7 @@ import { LOCALE_COOKIE, locales } from "@/i18n/config";
 
 import { setPreferenceCookie } from "@/lib/cookies";
 import { useDemoUser } from "@/lib/demo-user";
-import { DEMO_USERS } from "@/lib/demo-users";
+import { USER_GROUPS, homeOf, isManagement } from "@/lib/demo-users";
 import { useApi } from "@/lib/hooks";
 import { DemoBadge } from "./demo-badge";
 
@@ -64,34 +64,41 @@ function RoleSwitcher() {
         {user === "wali_inspector" ? <Eye className="size-4" /> : <UserRound className="size-4" />}
         <span className="truncate">{t(`roles.${user}`)}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-72">
+      <DropdownMenuContent align="end" className="max-h-[80dvh] w-72">
         <DropdownMenuGroup>
-          <DropdownMenuLabel>{t("topbar.role")}</DropdownMenuLabel>
           <DropdownMenuRadioGroup
             value={user}
             onValueChange={(v) => {
+              const stay = isManagement(user) && isManagement(v) && !pathname.startsWith("/facilities/");
               setUser(v);
-              // A facility page may be out of the new scope; go back to the overview.
-              // Other pages refetch in place (their filters reset with the role).
-              if (pathname.startsWith("/facilities/")) router.push("/");
+              // Management roles share the dashboards (they refetch in place); every other
+              // switch lands on the new role's own home page.
+              if (!stay) router.push(homeOf(v));
             }}
           >
-            {DEMO_USERS.map((k) => (
-              <DropdownMenuRadioItem key={k} value={k} className="items-start py-2">
-                <span className="flex flex-col gap-0.5">
-                  <span className="flex items-center gap-2">
-                    {t(`roles.${k}`)}
-                    {k === "wali_inspector" && (
-                      <span className="rounded bg-muted px-1.5 text-[10px] text-muted-foreground">
-                        {t("topbar.readOnly")}
+            {USER_GROUPS.map(([group, keys]) => (
+              <Fragment key={group}>
+                <DropdownMenuLabel className="pt-2 text-[11px] font-normal text-muted-foreground">
+                  {t(`topbar.group_${group}`)}
+                </DropdownMenuLabel>
+                {keys.map((k) => (
+                  <DropdownMenuRadioItem key={k} value={k} className="items-start py-2">
+                    <span className="flex flex-col gap-0.5">
+                      <span className="flex items-center gap-2">
+                        {t(`roles.${k}`)}
+                        {k === "wali_inspector" && (
+                          <span className="rounded bg-muted px-1.5 text-[10px] text-muted-foreground">
+                            {t("topbar.readOnly")}
+                          </span>
+                        )}
                       </span>
-                    )}
-                  </span>
-                  <span dir="ltr" className="text-start font-mono text-[11px] text-muted-foreground">
-                    {scopeOf(k) ?? "…"}
-                  </span>
-                </span>
-              </DropdownMenuRadioItem>
+                      <span dir="ltr" className="text-start font-mono text-[11px] text-muted-foreground">
+                        {scopeOf(k) ?? "…"}
+                      </span>
+                    </span>
+                  </DropdownMenuRadioItem>
+                ))}
+              </Fragment>
             ))}
           </DropdownMenuRadioGroup>
         </DropdownMenuGroup>

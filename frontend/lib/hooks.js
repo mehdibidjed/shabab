@@ -36,3 +36,10 @@ export function withQuery(path, params) {
   const s = qs.toString();
   return s ? `${path}?${s}` : path;
 }
+
+/** Returns `send(path, method, body)` calling the API as the current demo user (for mutations). */
+export function useSend() {
+  const { user } = useDemoUser();
+  return (path, method = "POST", body) =>
+    api(path, user, { method, body: body === undefined ? undefined : JSON.stringify(body) });
+}
