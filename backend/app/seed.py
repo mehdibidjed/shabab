@@ -11,6 +11,8 @@ from app.core.db import Base, SessionLocal, engine
 from app.models import Activity, Booking, Facility, Member, OrgUnit, Staff
 
 rng = random.Random(42)
+# Member names come from their own generator so adding them didn't shift any other seeded figure.
+names_rng = random.Random(7)
 TODAY = date.today()
 START = (TODAY.replace(day=1) - timedelta(days=150)).replace(day=1)  # ~6 months back
 BOOKING_HORIZON = TODAY + timedelta(days=14)
@@ -137,6 +139,25 @@ OTHER_STRUCTURE = [
 ]
 
 
+MALE_FIRST = [("محمد", "Mohamed"), ("أمين", "Amine"), ("ياسين", "Yacine"), ("كريم", "Karim"), ("سفيان", "Sofiane"),
+              ("رضا", "Reda"), ("عبد الرحمن", "Abderrahmane"), ("نسيم", "Nassim"), ("أيوب", "Ayoub"), ("إسلام", "Islam"),
+              ("هشام", "Hichem"), ("وليد", "Walid"), ("أنس", "Anes"), ("زكرياء", "Zakaria"), ("بلال", "Bilal"),
+              ("عبد الحق", "Abdelhak"), ("رامي", "Rami"), ("يونس", "Younes"), ("مهدي", "Mehdi"), ("حمزة", "Hamza")]
+FEMALE_FIRST = [("فاطمة", "Fatima"), ("أمينة", "Amina"), ("سارة", "Sarah"), ("نور الهدى", "Nour El Houda"),
+                ("خديجة", "Khadidja"), ("إيمان", "Imane"), ("ليلى", "Leila"), ("مريم", "Meriem"), ("حنان", "Hanane"),
+                ("رانيا", "Rania"), ("ياسمين", "Yasmine"), ("شيماء", "Chaima"), ("آية", "Aya"), ("ملاك", "Malak"),
+                ("سلمى", "Selma"), ("هبة", "Hiba"), ("لينة", "Lina"), ("دنيا", "Dounia"), ("أسماء", "Asma"), ("وئام", "Wiam")]
+MEMBER_LAST = LAST_NAMES + [("بوشامة", "Bouchama"), ("لعرابي", "Laarabi"), ("بن جدو", "Bendjeddou"), ("قريشي", "Guerichi"),
+                            ("بوالشعير", "Bouchair"), ("زواوي", "Zouaoui"), ("عبيدي", "Abidi"), ("بوخالفة", "Boukhalfa"),
+                            ("حجاج", "Hadjadj"), ("مرابط", "Merabet")]
+
+
+def member_name(gender: str) -> tuple[str, str]:
+    (fa, ff) = names_rng.choice(MALE_FIRST if gender == "m" else FEMALE_FIRST)
+    (la, lf) = names_rng.choice(MEMBER_LAST)
+    return f"{fa} {la}", f"{ff} {lf}"
+
+
 def random_name() -> tuple[str, str]:
     (fa, ff), (la, lf) = rng.choice(FIRST_NAMES), rng.choice(LAST_NAMES)
     return f"{fa} {la}", f"{ff} {lf}"
@@ -195,10 +216,13 @@ def seed() -> None:
         lo, hi = MEMBERS_PER_TYPE[type_]
         for _ in range(rng.randint(lo, hi) if hi else 0):
             days_ago = int(365 * (rng.random() ** 1.4))
-            db.add(Member(age=rng.choices(range(12, 31), weights=[3] * 7 + [2] * 7 + [1] * 5)[0],
-                          gender=rng.choices("mf", weights=[55, 45])[0], facility_id=fac.id, org_path=path,
-                          joined_at=TODAY - timedelta(days=days_ago), active=rng.random() > 0.15))
+            age = rng.choices(range(12, 31), weights=[3] * 7 + [2] * 7 + [1] * 5)[0]
+            gender = rng.choices("mf", weights=[55, 45])[0]
+            name_ar, name_fr = member_name(gender)
             counts["members"] += 1
+            db.add(Member(member_no=f"M-{counts['members']:05d}", full_name_ar=name_ar, full_name_fr=name_fr,
+                          age=age, gender=gender, facility_id=fac.id, org_path=path,
+                          joined_at=TODAY - timedelta(days=days_ago), active=rng.random() > 0.15))
 
         # Activities: fewer while in maintenance, none once closed (recently).
         per_week, weights = ACTIVITY_PROFILE[type_]

@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from app.core.dates import month_start
 from app.core.scope import Scope
 from app.modules.activities.models import CATEGORIES, Activity, Booking
 from app.modules.dashboard.schemas import CategoryPoint, Kpis, MonthPoint, Trends, TypePoint
@@ -13,12 +14,6 @@ from app.modules.org.models import FACILITY_TYPES, OrgUnit
 
 SLOTS_PER_DAY = 3
 
-
-def _month_start(d: date, back: int = 0) -> date:
-    y, m = d.year, d.month - back
-    while m <= 0:
-        y, m = y - 1, m + 12
-    return date(y, m, 1)
 
 
 def _count(db: Session, model, scope: Scope, *where) -> int:
@@ -37,8 +32,8 @@ def _occupancy(db: Session, scope: Scope, start: date, end: date) -> float:
 
 def get_kpis(db: Session, scope: Scope) -> Kpis:
     today = date.today()
-    this_month = _month_start(today)
-    last_month = _month_start(today, 1)
+    this_month = month_start(today)
+    last_month = month_start(today, 1)
     last_month_end = this_month - timedelta(days=1)
     last_month_same_day = min(last_month + (today - this_month), last_month_end)
 
@@ -57,7 +52,7 @@ def get_kpis(db: Session, scope: Scope) -> Kpis:
 
 def get_trends(db: Session, scope: Scope, months: int = 6) -> Trends:
     today = date.today()
-    start = _month_start(today, months - 1)
+    start = month_start(today, months - 1)
 
     # Month bucketing in Python keeps the query portable (SQLite now, Postgres later).
     joined = Counter(d.strftime("%Y-%m") for d in db.scalars(
@@ -68,7 +63,7 @@ def get_trends(db: Session, scope: Scope, months: int = 6) -> Trends:
     points = []
     total = _count(db, Member, scope, Member.joined_at < start)
     for i in range(months - 1, -1, -1):
-        key = _month_start(today, i).strftime("%Y-%m")
+        key = month_start(today, i).strftime("%Y-%m")
         total += joined.get(key, 0)
         points.append(MonthPoint(month=key, new_members=joined.get(key, 0), total_members=total,
                                  activities=acts.get(key, 0)))

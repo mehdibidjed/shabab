@@ -8,11 +8,10 @@ from app.core.scope import Scope
 from app.modules.activities.models import Activity, Booking
 from app.modules.facilities.models import Facility, Staff
 from app.modules.facilities.schemas import FacilityDetail, FacilityOut, MemberStats
-from app.modules.members.models import Member
+from app.modules.members.models import AGE_BANDS, Member
 from app.modules.org.models import OrgUnit
 
 SLOTS_PER_DAY = 3
-AGE_BANDS = [("12-15", 12, 15), ("16-18", 16, 18), ("19-24", 19, 24), ("25-30", 25, 30)]
 
 
 def _summaries(db: Session, scope: Scope, type_: str | None = None) -> list[FacilityOut]:

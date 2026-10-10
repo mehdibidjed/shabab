@@ -4,10 +4,12 @@ from fastapi import APIRouter, Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.ai.router import router as ai_router
+from app.modules.activities.router import router as activities_router
 from app.core.demo_users import DEMO_USERS
 from app.core.scope import Scope, get_scope
 from app.modules.dashboard.router import router as dashboard_router
 from app.modules.facilities.router import router as facilities_router
+from app.modules.members.router import router as members_router
 from app.modules.org.router import router as org_router
 
 app = FastAPI(title="Shabab Platform API (prototype)", version="0.1.0")
@@ -27,7 +29,7 @@ def me(scope: Scope = Depends(get_scope)):
     return {"user": scope.user.__dict__, "users": [u.__dict__ for u in DEMO_USERS.values()]}
 
 
-for r in (org_router, dashboard_router, facilities_router, ai_router):
+for r in (org_router, dashboard_router, facilities_router, members_router, activities_router, ai_router):
     api.include_router(r)
 app.include_router(api)
 
