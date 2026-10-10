@@ -22,3 +22,4 @@ class Member(Base):
     org_path: Mapped[str] = mapped_column(String(255), index=True)
     joined_at: Mapped[dt.date]
     active: Mapped[bool] = mapped_column(Boolean, default=True)
+    demo_key: Mapped[str | None] = mapped_column(String(32), unique=True)  # links a demo user (prototype only)

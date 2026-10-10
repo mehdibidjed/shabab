@@ -8,7 +8,7 @@ STATUSES = ("active", "maintenance", "closed")
 POSITIONS = (
     "director", "counselor", "head_educator", "educator", "secretariat",
     "finance_admin", "coordination_admin", "associations_admin",
-    "activities_admin", "professional_worker",
+    "activities_admin", "professional_worker", "psychologist",
 )
 
 
@@ -39,3 +39,4 @@ class Staff(Base):
     reports_to_id: Mapped[int | None] = mapped_column(ForeignKey("staff.id"))
     facility_id: Mapped[int] = mapped_column(ForeignKey("facilities.id"), index=True)
     org_path: Mapped[str] = mapped_column(String(255), index=True)
+    demo_key: Mapped[str | None] = mapped_column(String(32), unique=True)  # links a demo user (prototype only)

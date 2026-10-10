@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base
 
-CATEGORIES = ("sport", "culture", "science", "scouting", "environment", "digital")
+CATEGORIES = ("sport", "culture", "science", "scouting", "environment", "digital", "prevention")
 SLOTS = ("morning", "afternoon", "evening")
 
 
@@ -20,6 +20,8 @@ class Activity(Base):
     org_path: Mapped[str] = mapped_column(String(255), index=True)
     date: Mapped[dt.date] = mapped_column(index=True)
     attendees: Mapped[int] = mapped_column(Integer)
+    # Set for sessions published by a preventive program (Module 2).
+    program_id: Mapped[int | None] = mapped_column(ForeignKey("psych_programs.id"))
 
 
 class Booking(Base):
@@ -32,3 +34,14 @@ class Booking(Base):
     date: Mapped[dt.date] = mapped_column(index=True)
     slot: Mapped[str] = mapped_column(String(16))
     requester: Mapped[str] = mapped_column(String(200))
+
+
+class ActivityAttendance(Base):
+    """Which member attended which activity: feeds the attendance-drop alert."""
+
+    __tablename__ = "activity_attendance"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    activity_id: Mapped[int] = mapped_column(ForeignKey("activities.id"), index=True)
+    member_id: Mapped[int] = mapped_column(ForeignKey("members.id"), index=True)
+    date: Mapped[dt.date] = mapped_column(index=True)  # denormalised from the activity for cheap windows

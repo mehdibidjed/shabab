@@ -12,3 +12,6 @@ out/
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# Module 2 development encryption key (never commit)
+backend/.case_key

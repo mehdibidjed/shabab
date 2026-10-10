@@ -9,6 +9,7 @@ from datetime import date, timedelta
 
 from app.core.db import Base, SessionLocal, engine
 from app.models import Activity, Booking, Facility, Member, OrgUnit, Staff
+from app.modules.psych.seed_data import seed_psych
 
 rng = random.Random(42)
 # Member names come from their own generator so adding them didn't shift any other seeded figure.
@@ -257,8 +258,10 @@ def seed() -> None:
                         counts["bookings"] += 1
 
     db.commit()
+    psych = seed_psych(db, TODAY)
     db.close()
     print("Seeded Constantine demo data:", ", ".join(f"{k}={v}" for k, v in counts.items()))
+    print("Module 2 (psych):", ", ".join(f"{k}={v}" for k, v in psych.items()))
 
 
 if __name__ == "__main__":
