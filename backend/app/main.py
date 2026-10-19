@@ -18,6 +18,8 @@ app = FastAPI(title="Shabab Platform API (prototype)", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=os.getenv("CORS_ORIGINS", "http://localhost:3000").split(","),
+    # e.g. ^https://shabab[a-z0-9-]*\.vercel\.app$ to also accept Vercel preview deployments
+    allow_origin_regex=os.getenv("CORS_ORIGIN_REGEX") or None,
     allow_methods=["*"],
     allow_headers=["*"],
 )

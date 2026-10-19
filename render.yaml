@@ -1,0 +1,26 @@
+# Render Blueprint for the backend (FastAPI). The frontend is deployed on Vercel.
+# Render → New → Blueprint → pick this repository.
+services:
+  - type: web
+    name: shabab-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    # Re-seed on every start: the demo data stays dated "today", and the free
+    # instance's disk is ephemeral anyway (writes are lost on restart).
+    startCommand: python -m app.seed && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      # Module 2 field-level encryption key (any secret works; see app/core/crypto.py).
+      - key: CASE_KEY
+        generateValue: true
+      # The Vercel production domain and its preview deployments.
+      - key: CORS_ORIGIN_REGEX
+        value: ^https://shabab[a-z0-9-]*\.vercel\.app$
+      # Optional: live AI insights. The API is public, so anyone could spend
+      # this key's credits; leave it empty for the offline demo insights.
+      - key: DEEPSEEK_API_KEY
+        sync: false

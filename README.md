@@ -38,6 +38,24 @@ If the backend is not on `localhost:8000`, set `NEXT_PUBLIC_API_URL` (see `front
 
 Re-run `python -m app.seed` on another day to keep "this month" figures fresh.
 
+## Deploy (Vercel + Render)
+
+The frontend goes to **Vercel**; the FastAPI backend goes to **Render** (Vercel's Python
+functions have a read-only, ephemeral filesystem, so SQLite writes would be lost).
+
+1. **Backend on Render**: Render → *New* → *Blueprint* → this repository. `render.yaml` creates
+   `shabab-api` (free plan): it installs the requirements, re-seeds the demo data on every start
+   and generates `CASE_KEY`. Leave `DEEPSEEK_API_KEY` empty unless you accept that anyone using
+   the public demo can spend its credits. Note the service URL, e.g. `https://shabab-api.onrender.com`.
+2. **Frontend on Vercel**: Vercel → *Add New* → *Project* → import this repository, set
+   **Root Directory** to `frontend`, and add the environment variable
+   `NEXT_PUBLIC_API_URL` = the Render URL (no trailing slash). Deploy.
+3. CORS: the backend accepts `https://shabab*.vercel.app` (production and previews) through
+   `CORS_ORIGIN_REGEX`. With another project name or a custom domain, set `CORS_ORIGINS` on Render.
+
+Free Render instances sleep after ~15 minutes idle; the first request then takes up to a minute
+while the instance wakes and re-seeds. Data written through the demo is reset on each restart.
+
 ## Demo script
 
 1. Open http://localhost:3000. It starts in **Arabic (RTL)** as the **DJS director**: 16 facilities, KPIs, charts, org tree and facilities table.

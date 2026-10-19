@@ -116,6 +116,19 @@ Privacy rules come from CLAUDE.md; Algeria's **Law 18-07** treats health data as
   in activity statistics), linked by `program_id`.
 - **Seed**: generic, fictional wording only; one minor's case deliberately awaits consent.
 
+## Deployment
+
+- **Vercel for the frontend, Render for the API.** Vercel's Python functions run on a read-only,
+  ephemeral filesystem: SQLite could be read but every write (referrals, sessions, bookings)
+  would vanish. Render runs a normal long-lived process (`render.yaml` Blueprint).
+- **Re-seed on start** on Render: the free disk is ephemeral anyway, and seeding at start keeps
+  the demo's "this month" figures current after each wake-up.
+- **`CASE_KEY` accepts any secret**: a non-Fernet value is turned into a key with SHA-256, because
+  platforms generate secrets in standard base64, which Fernet rejects.
+- **CORS by regex** (`CORS_ORIGIN_REGEX`) so Vercel preview deployments work without edits.
+- The frontend reads `NEXT_PUBLIC_API_URL` at build time, so the Render URL must be set in Vercel
+  before the first build (or redeploy after changing it).
+
 ## Not in v1 (on purpose)
 
 Real authentication, maps, case-file transfer UI, notifications (e-mail/SMS), and a scheduled
