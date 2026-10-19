@@ -38,7 +38,7 @@ function ActivitiesContent({ initialFacility, initialCategory }) {
     document.getElementById("activities-list")?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
-    <div className="flex flex-col gap-4 md:gap-6">
+    <div className="stagger flex flex-col gap-4 md:gap-5">
       <ActivitiesStats
         category={category}
         facility={facility}
@@ -78,34 +78,34 @@ function ActivitiesStats({ category, facility, onCategory, onFacility }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="stagger grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
         <StatTile
           icon={CalendarDays}
           label={t("thisMonth")}
-          value={fmtNumber(data.this_month, locale)}
+          count={data.this_month}
           sub={
             <Delta
               diff={data.this_month - data.last_month_same_period}
-              label={(d) => tk("vsLastMonth", { delta: d })}
+              hint={tk("vsLastMonthShort")}
             />
           }
         />
         <StatTile
           icon={UsersRound}
           label={t("attendeesThisMonth")}
-          value={fmtNumber(data.attendees_this_month, locale)}
+          count={data.attendees_this_month}
           sub={t("monthToDate")}
         />
         <StatTile
           icon={UsersRound}
           label={t("medianAttendees")}
-          value={fmtNumber(data.median_attendees, locale)}
+          count={data.median_attendees}
           sub={t("medianAttendeesSub")}
         />
         <StatTile
           icon={CalendarRange}
           label={t("total6m")}
-          value={fmtNumber(total6m, locale)}
+          count={total6m}
           sub={t("categoriesCount", { n: data.by_category.length })}
         />
       </div>
@@ -282,7 +282,7 @@ function ActivitiesTable({ facility, onFacility, category, onCategory }) {
             {/* Phone: cards */}
             <ul className="flex flex-col gap-2 md:hidden">
               {data.items.map((a) => (
-                <li key={a.id} className="flex gap-3 rounded-lg border p-3">
+                <li key={a.id} className="flex gap-3 rounded-xl border border-border/60 p-3">
                   <span className="w-14 shrink-0 text-xs tabular-nums text-muted-foreground">{fmtDate(a.date, locale)}</span>
                   <span className="flex min-w-0 flex-1 flex-col gap-1">
                     <span className="font-medium">{pick(a, "title", locale)}</span>

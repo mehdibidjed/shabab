@@ -84,7 +84,7 @@ export function FacilityView({ id }) {
   const ms = f.member_stats;
 
   return (
-    <div className="flex flex-col gap-4 md:gap-6">
+    <div className="stagger flex flex-col gap-4 md:gap-5">
       <PageHeader
         title={pick(f, "name", locale)}
         subtitle={

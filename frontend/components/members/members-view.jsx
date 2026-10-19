@@ -35,7 +35,7 @@ function MembersContent({ initialFacility }) {
   const [facility, setFacility] = useState(initialFacility ?? "all");
 
   return (
-    <div className="flex flex-col gap-4 md:gap-6">
+    <div className="stagger flex flex-col gap-4 md:gap-5">
       <MembersStats
         facility={facility}
         onFacility={(id) => {
@@ -65,34 +65,35 @@ function MembersStats({ facility, onFacility }) {
   }
 
   const minors = (data.age_bands["12-15"] ?? 0) + (data.age_bands["16-18"] ?? 0);
-  const pct = (n) => fmtPct(data.active ? (100 * n) / data.active : 0, locale);
   const months = data.new_per_month.map((m) => ({ month: m.month, value: m.count }));
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="stagger grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
         <StatTile
           icon={Users}
           label={t("registered")}
-          value={fmtNumber(data.total, locale)}
+          count={data.total}
           sub={t("activeOf", { active: fmtNumber(data.active, locale) })}
         />
         <StatTile
           icon={UserPlus}
           label={t("newThisMonth")}
-          value={fmtNumber(data.new_this_month, locale)}
+          count={data.new_this_month}
           sub={t("monthToDate")}
         />
         <StatTile
           icon={Venus}
           label={t("femaleShare")}
-          value={pct(data.female)}
+          count={data.active ? (100 * data.female) / data.active : 0}
+          format={(n) => fmtPct(n, locale)}
           sub={`${tf("female")} ${fmtNumber(data.female, locale)} · ${tf("male")} ${fmtNumber(data.male, locale)}`}
         />
         <StatTile
           icon={Users}
           label={t("minorsShare")}
-          value={pct(minors)}
+          count={data.active ? (100 * minors) / data.active : 0}
+          format={(n) => fmtPct(n, locale)}
           sub={t("minorsCount", { n: fmtNumber(minors, locale) })}
         />
       </div>
@@ -273,7 +274,7 @@ function MembersTable({ facility, onFacility }) {
             {/* Phone: cards */}
             <ul className="flex flex-col gap-2 md:hidden">
               {data.items.map((m) => (
-                <li key={m.id} className="flex flex-col gap-1.5 rounded-lg border p-3">
+                <li key={m.id} className="flex flex-col gap-1.5 rounded-xl border border-border/60 p-3">
                   <div className="flex items-start justify-between gap-2">
                     <span className="font-medium">{pick(m, "full_name", locale)}</span>
                     <MemberStatus active={m.active} />

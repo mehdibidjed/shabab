@@ -6,17 +6,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fmtNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { AnimatedNumber } from "./animated-number";
 
-export function StatTile({ icon: Icon, label, value, sub }) {
+/** KPI tile. Pass `count` (+ optional `format`) to animate the number, or a ready `value`. */
+export function StatTile({ icon: Icon, label, value, count, format, sub }) {
+  const locale = useLocale();
   return (
-    <Card size="sm" className="gap-2">
-      <CardContent className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
-          <span className="line-clamp-2">{label}</span>
-          <Icon className="size-4 shrink-0" aria-hidden />
+    <Card size="sm" className="gap-0">
+      <CardContent className="flex flex-col gap-3">
+        <div className="flex items-start justify-between gap-2">
+          <span className="line-clamp-2 text-[13px] text-muted-foreground">{label}</span>
+          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent text-accent-foreground">
+            <Icon className="size-[18px]" aria-hidden />
+          </span>
         </div>
-        <div className="text-2xl font-semibold tracking-tight md:text-3xl">{value}</div>
-        <div className="min-h-4 text-xs text-muted-foreground">{sub}</div>
+        <div className="text-[28px] font-semibold leading-none tracking-tight md:text-[32px]">
+          {count !== undefined ? <AnimatedNumber value={count} format={format ?? ((n) => fmtNumber(n, locale))} /> : value}
+        </div>
+        <div className="min-h-5 text-xs text-muted-foreground">{sub}</div>
       </CardContent>
     </Card>
   );
@@ -24,32 +31,32 @@ export function StatTile({ icon: Icon, label, value, sub }) {
 
 export function StatTilesSkeleton({ count = 4 }) {
   return (
-    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
       {Array.from({ length: count }, (_, i) => (
-        <Skeleton key={i} className="h-28" />
+        <Skeleton key={i} className="h-[132px] rounded-2xl" />
       ))}
     </div>
   );
 }
 
-/** Signed change with icon + colour (never colour alone). `label` wraps the signed value in a sentence. */
-export function Delta({ diff, label }) {
+/** Signed change as a small pill (icon + colour + sign: never colour alone), then a short hint. */
+export function Delta({ diff, hint }) {
   const locale = useLocale();
   const t = useTranslations("kpi");
-  if (diff === 0) {
-    return (
-      <span className="inline-flex items-center gap-1">
-        <Minus className="size-3" aria-hidden />
-        {t("noChange")}
-      </span>
-    );
-  }
-  const Icon = diff > 0 ? ArrowUpRight : ArrowDownRight;
-  const signed = `${diff > 0 ? "+" : "−"}${fmtNumber(Math.abs(diff), locale)}`;
+  const up = diff > 0;
+  const Icon = diff === 0 ? Minus : up ? ArrowUpRight : ArrowDownRight;
   return (
-    <span className={cn("inline-flex items-center gap-1", diff > 0 ? "text-success-text" : "text-status-critical")}>
-      <Icon className="size-3 shrink-0 rtl:-scale-x-100" aria-hidden />
-      <span>{label(signed)}</span>
+    <span className="inline-flex flex-wrap items-center gap-1.5">
+      <span
+        className={cn(
+          "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[11px] font-medium",
+          diff === 0 ? "bg-muted text-muted-foreground" : up ? "bg-status-good/12 text-success-text" : "bg-status-critical/10 text-status-critical",
+        )}
+      >
+        <Icon className="size-3 shrink-0 rtl:-scale-x-100" aria-hidden />
+        {diff === 0 ? t("noChange") : `${up ? "+" : "−"}${fmtNumber(Math.abs(diff), locale)}`}
+      </span>
+      {diff !== 0 && hint && <span>{hint}</span>}
     </span>
   );
 }

@@ -36,10 +36,10 @@ export function CasesList() {
         ) : data.length === 0 ? (
           <p className="py-8 text-center text-sm text-muted-foreground">{t("noCases")}</p>
         ) : (
-          <ul className="grid gap-2 md:grid-cols-2">
+          <ul className="stagger grid gap-3 md:grid-cols-2">
             {data.map((c) => (
               <li key={c.id}>
-                <Link href={`/psych/cases/${c.id}`} className="flex flex-col gap-2 rounded-lg border p-3 transition-colors hover:bg-muted">
+                <Link href={`/psych/cases/${c.id}`} className="lift flex flex-col gap-2 rounded-2xl border border-border/60 bg-card p-4">
                   <div className="flex items-start justify-between gap-2">
                     <PersonName person={c.subject} />
                     <StatusPill status={c.status} />

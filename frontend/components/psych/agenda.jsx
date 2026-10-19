@@ -34,7 +34,7 @@ export function Agenda() {
   );
 
   return (
-    <div className="grid items-start gap-4 md:gap-6 lg:grid-cols-3">
+    <div className="stagger grid items-start gap-4 md:gap-5 lg:grid-cols-3">
       <Card className="lg:col-span-2">
         <CardHeader>
           <CardTitle>{t("agendaTitle")}</CardTitle>
@@ -53,7 +53,7 @@ export function Agenda() {
                 <h3 className="text-sm font-medium text-muted-foreground">{fmtDay(day, locale)}</h3>
                 <ul className="flex flex-col gap-2">
                   {items.map((a) => (
-                    <li key={a.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-lg border p-3">
+                    <li key={a.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-border/60 p-3">
                       <span className="w-14 font-medium tabular-nums">{fmtTime(a.starts_at, locale)}</span>
                       <span className="flex min-w-0 flex-1 flex-col">
                         {a.with_person ? <PersonName person={a.with_person} /> : <span>—</span>}

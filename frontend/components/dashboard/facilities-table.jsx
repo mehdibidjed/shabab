@@ -89,7 +89,7 @@ export function FacilitiesTable({ officePath, onClearOffice, className }) {
                 <li key={f.id}>
                   <Link
                     href={`/facilities/${f.id}`}
-                    className="flex flex-col gap-2 rounded-lg border p-3 transition-colors hover:bg-muted"
+                    className="flex flex-col gap-2 rounded-xl border border-border/60 p-3 transition-colors hover:bg-muted"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <span className="flex min-w-0 items-center gap-2 font-medium">
@@ -127,15 +127,15 @@ export function FacilitiesTable({ officePath, onClearOffice, className }) {
               <TableBody>
                 {rows.map((f) => (
                   <TableRow key={f.id} className="cursor-pointer" onClick={() => router.push(`/facilities/${f.id}`)}>
-                    <TableCell className="min-w-52 whitespace-normal">
+                    <TableCell className="min-w-60 max-w-80">
                       <Link
                         href={`/facilities/${f.id}`}
                         className="flex items-center gap-2 font-medium hover:underline"
                       >
                         <TypeIcon type={f.type} className="size-4 shrink-0 text-muted-foreground" />
-                        <span className="flex flex-col">
-                          <span>{pick(f, "name", locale)}</span>
-                          <span className="text-xs font-normal text-muted-foreground">
+                        <span className="flex min-w-0 flex-col">
+                          <span className="truncate" title={pick(f, "name", locale)}>{pick(f, "name", locale)}</span>
+                          <span className="truncate text-xs font-normal text-muted-foreground">
                             {t(`types.${f.type}`)} · {pick(f, "commune", locale)} · {t(`offices.${f.office}Short`)}
                           </span>
                         </span>

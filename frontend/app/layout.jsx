@@ -1,4 +1,4 @@
-import { IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Readex_Pro } from "next/font/google";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -10,10 +10,10 @@ import { DemoUserProvider } from "@/lib/demo-user";
 import { DEMO_USER_COOKIE, isDemoUser } from "@/lib/demo-users";
 import "./globals.css";
 
-// One family covering Arabic and Latin keeps ar/fr/en visually consistent.
-const font = IBM_Plex_Sans_Arabic({
+// Readex Pro: a modern, open typeface drawn for Arabic and Latin together, so
+// ar/fr/en share one voice. Variable font: one file covers every weight.
+const font = Readex_Pro({
   subsets: ["arabic", "latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-app",
 });
 
@@ -28,7 +28,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang={locale} dir={dirOf(locale)} className={font.variable} suppressHydrationWarning>
-      <body className="min-h-dvh bg-muted/40 font-sans text-foreground antialiased">
+      <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
         <NextIntlClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             <DemoUserProvider initial={isDemoUser(demoUser) ? demoUser : "djs_director"}>

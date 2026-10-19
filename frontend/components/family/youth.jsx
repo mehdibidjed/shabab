@@ -29,8 +29,8 @@ export function YouthSpace() {
   );
 
   return (
-    <div className="grid items-start gap-4 md:gap-6 lg:grid-cols-3">
-      <div className="flex flex-col gap-4 md:gap-6 lg:col-span-2">
+    <div className="stagger grid items-start gap-4 md:gap-5 lg:grid-cols-3">
+      <div className="flex flex-col gap-4 md:gap-5 lg:col-span-2">
         <Card>
           <CardHeader>
             <CardTitle>{t("bookTitle")}</CardTitle>

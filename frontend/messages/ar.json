@@ -62,7 +62,8 @@
     "vsLastMonth": "{delta} مقارنة بنفس الفترة من الشهر الماضي",
     "occupancy": "نسبة شغل الحجوزات",
     "occupancyLast": "الشهر الماضي: {pct}",
-    "noChange": "دون تغيير"
+    "noChange": "دون تغيير",
+    "vsLastMonthShort": "عن نفس الفترة من الشهر الماضي"
   },
   "charts": {
     "members": "تطور عدد المنخرطين",
@@ -457,7 +458,8 @@
     "publishedHint": "منشور في رزنامة دار الشباب: يراه الشباب والمربون.",
     "calendarTitle": "الحصص الوقائية القادمة",
     "calendarSub": "رزنامة دار الشباب",
-    "calendarEmpty": "لا توجد حصص وقائية مبرمجة"
+    "calendarEmpty": "لا توجد حصص وقائية مبرمجة",
+    "details": "التفاصيل"
   },
   "educator": {
     "referTitle": "إحالة شاب إلى النفساني",

@@ -62,7 +62,8 @@
     "vsLastMonth": "{delta} vs same period last month",
     "occupancy": "Booking occupancy",
     "occupancyLast": "Last month: {pct}",
-    "noChange": "No change"
+    "noChange": "No change",
+    "vsLastMonthShort": "vs same period last month"
   },
   "charts": {
     "members": "Members over time",
@@ -457,7 +458,8 @@
     "publishedHint": "Published to the youth center calendar: visible to young members and educators.",
     "calendarTitle": "Upcoming prevention sessions",
     "calendarSub": "Youth center calendar",
-    "calendarEmpty": "No prevention sessions scheduled"
+    "calendarEmpty": "No prevention sessions scheduled",
+    "details": "Details"
   },
   "educator": {
     "referTitle": "Refer a young person",

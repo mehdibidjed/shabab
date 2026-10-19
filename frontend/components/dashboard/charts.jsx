@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip as ChartTooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip as ChartTooltip, XAxis, YAxis } from "recharts";
 import { ChartCard, LegendItem } from "@/components/shared/chart-card";
 import { ErrorState, LoadingBlock } from "@/components/shared/states";
 import { BarList, C, TooltipBox, tick, useRtl } from "@/components/shared/viz";
@@ -43,8 +43,14 @@ export function MembersChart({ className }) {
       ) : (
         <div dir="ltr" className="h-60 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={rows} margin={{ top: 12, right: 12, bottom: 0, left: 12 }}>
-              <CartesianGrid vertical={false} stroke={C.grid} />
+            <AreaChart data={rows} margin={{ top: 12, right: 12, bottom: 0, left: 12 }}>
+              <defs>
+                <linearGradient id="membersFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={C.s1} stopOpacity={0.28} />
+                  <stop offset="100%" stopColor={C.s1} stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid vertical={false} stroke={C.grid} strokeDasharray="3 4" />
               <XAxis
                 dataKey="month"
                 reversed={rtl}
@@ -77,15 +83,17 @@ export function MembersChart({ className }) {
                   );
                 }}
               />
-              <Line
+              <Area
                 type="monotone"
                 dataKey="total_members"
                 stroke={C.s1}
-                strokeWidth={2}
-                dot={{ r: 4, fill: C.s1, stroke: C.surface, strokeWidth: 2 }}
-                activeDot={{ r: 6, stroke: C.surface, strokeWidth: 2 }}
+                strokeWidth={2.5}
+                fill="url(#membersFill)"
+                dot={false}
+                activeDot={{ r: 5, stroke: C.surface, strokeWidth: 2 }}
+                animationDuration={900}
               />
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       )}
