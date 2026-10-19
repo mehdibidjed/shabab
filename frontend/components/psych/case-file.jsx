@@ -66,7 +66,7 @@ export function CaseFile({ id }) {
   ];
 
   return (
-    <div className="flex flex-col gap-4 md:gap-6">
+    <div className="stagger flex flex-col gap-4 md:gap-5">
       <Link href="/psych/cases" className="inline-flex w-fit items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
         <ArrowLeft className="size-4 rtl:-scale-x-100" />
         {t("backToCases")}
@@ -172,7 +172,7 @@ function SessionsTab({ id, locked }) {
         <LockedNotice />
       ) : form ? (
         <form
-          className="flex flex-col gap-2 rounded-lg border p-3"
+          className="flex flex-col gap-2 rounded-xl border border-border/60 p-3"
           onSubmit={async (e) => {
             e.preventDefault();
             await send(`/psych/cases/${id}/sessions`, "POST", form);
@@ -240,7 +240,7 @@ function AssessmentsTab({ id, locked }) {
         <LockedNotice />
       ) : form ? (
         <form
-          className="flex flex-col gap-2 rounded-lg border p-3"
+          className="flex flex-col gap-2 rounded-xl border border-border/60 p-3"
           onSubmit={async (e) => {
             e.preventDefault();
             await send(`/psych/cases/${id}/assessments`, "POST", form);
@@ -353,7 +353,7 @@ function ReportsTab({ id }) {
       <p className="text-sm text-muted-foreground">{t("reportsHint")}</p>
       {form ? (
         <form
-          className="flex flex-col gap-2 rounded-lg border p-3"
+          className="flex flex-col gap-2 rounded-xl border border-border/60 p-3"
           onSubmit={async (e) => {
             e.preventDefault();
             await send(`/psych/cases/${id}/parent-reports`, "POST", form);
@@ -388,7 +388,7 @@ function ReportsTab({ id }) {
         </Button>
       )}
       {(data ?? []).map((r) => (
-        <div key={r.id} className="flex flex-col gap-2 rounded-lg border p-3">
+        <div key={r.id} className="flex flex-col gap-2 rounded-xl border border-border/60 p-3">
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="font-medium"><bdi dir="ltr">{r.period}</bdi></span>
             {r.shared ? (

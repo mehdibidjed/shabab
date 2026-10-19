@@ -22,8 +22,8 @@ const EMPTY = { member: null, category: "behavior", observation: "", aggressive_
 
 export function EducatorReferrals() {
   return (
-    <div className="grid items-start gap-4 md:gap-6 lg:grid-cols-5">
-      <div className="flex flex-col gap-4 md:gap-6 lg:col-span-2">
+    <div className="stagger grid items-start gap-4 md:gap-5 lg:grid-cols-5">
+      <div className="flex flex-col gap-4 md:gap-5 lg:col-span-2">
         <ReferralForm />
         <UpcomingPrevention limit={5} />
       </div>

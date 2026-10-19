@@ -63,7 +63,7 @@ function TreeNode({ node, depth, selectedPath, onSelectOffice }) {
           style={{ paddingInlineStart: depth * 16 + 24 }}
         >
           <TypeIcon type={node.type} className="size-4 shrink-0 text-muted-foreground" />
-          <span className="min-w-0">{name}</span>
+          <span className="min-w-0 truncate" title={name}>{name}</span>
           {node.status && <StatusIcon status={node.status} />}
           {meta}
         </Link>
@@ -102,7 +102,7 @@ function TreeNode({ node, depth, selectedPath, onSelectOffice }) {
           className="flex min-w-0 flex-1 items-center gap-2 py-1.5 pe-2 text-start"
         >
           <TypeIcon type={node.type} className="size-4 shrink-0 text-primary" />
-          <span className={cn("min-w-0 truncate", depth < 2 && "font-medium")}>{name}</span>
+          <span className={cn("min-w-0 truncate", depth < 2 && "font-medium")} title={name}>{name}</span>
           {meta}
         </button>
       </div>

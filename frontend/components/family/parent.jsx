@@ -18,8 +18,8 @@ export function ParentSpace() {
   const { data: reports, error, isLoading, mutate } = useApi("/psych/parent/reports");
 
   return (
-    <div className="grid items-start gap-4 md:gap-6 lg:grid-cols-3">
-      <div className="flex flex-col gap-4 md:gap-6 lg:col-span-2">
+    <div className="stagger grid items-start gap-4 md:gap-5 lg:grid-cols-3">
+      <div className="flex flex-col gap-4 md:gap-5 lg:col-span-2">
         <Card>
           <CardContent className="flex flex-col gap-1">
             <span className="text-sm text-muted-foreground">{t("yourChild")}</span>
@@ -45,7 +45,7 @@ export function ParentSpace() {
             ) : (
               <ul className="flex flex-col gap-3">
                 {reports.map((r) => (
-                  <li key={r.id} className="flex flex-col gap-1.5 rounded-lg border p-3">
+                  <li key={r.id} className="flex flex-col gap-1.5 rounded-xl border border-border/60 p-3">
                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
                       <span>{t("sharedBy", { name: pick(r, "psychologist_name", locale) })}</span>
                       <span>{fmtDate(r.shared_at, locale, true)}</span>

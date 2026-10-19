@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Eye, Languages, Monitor, Moon, Sun, UserRound } from "lucide-react";
+import { Check, ChevronDown, Languages, Monitor, Moon, Sun } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
@@ -23,19 +23,22 @@ import { useDemoUser } from "@/lib/demo-user";
 import { USER_GROUPS, homeOf, isManagement } from "@/lib/demo-users";
 import { useApi } from "@/lib/hooks";
 import { DemoBadge } from "./demo-badge";
+import { RoleAvatar } from "./role-avatar";
 
 const noopSubscribe = () => () => {};
 const LANGUAGE_NAMES = { ar: "العربية", fr: "Français", en: "English" };
 
 export function TopBar({ menuButton }) {
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b bg-background/85 px-3 backdrop-blur md:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-1.5 bg-background/75 px-3 backdrop-blur-xl md:px-8">
       {menuButton}
       <div className="flex-1" />
       <DemoBadge className="hidden sm:inline-flex" />
-      <RoleSwitcher />
-      <LanguageSwitcher />
-      <ThemeSwitcher />
+      <div className="flex items-center gap-0.5 rounded-full bg-card p-1 shadow-soft">
+        <LanguageSwitcher />
+        <ThemeSwitcher />
+        <RoleSwitcher />
+      </div>
     </header>
   );
 }
@@ -54,15 +57,15 @@ function RoleSwitcher() {
       <DropdownMenuTrigger
         render={
           <Button
-            variant="outline"
-            size="sm"
-            className="max-w-[11rem] gap-2 sm:max-w-xs"
+            variant="ghost"
+            className="h-8 max-w-[12rem] gap-1.5 rounded-full ps-1 pe-2 sm:max-w-xs sm:gap-2 sm:pe-3"
             aria-label={t("topbar.switchRole")}
           />
         }
       >
-        {user === "wali_inspector" ? <Eye className="size-4" /> : <UserRound className="size-4" />}
-        <span className="truncate">{t(`roles.${user}`)}</span>
+        <RoleAvatar user={user} className="size-6" />
+        <span className="hidden truncate text-[13px] font-medium sm:inline">{t(`roles.${user}`)}</span>
+        <ChevronDown className="size-3.5 text-muted-foreground" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="max-h-[80dvh] w-72">
         <DropdownMenuGroup>
@@ -119,7 +122,7 @@ function LanguageSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="ghost" size="icon" aria-label={t("language")} />}>
+      <DropdownMenuTrigger render={<Button variant="ghost" size="icon-sm" className="rounded-full" aria-label={t("language")} />}>
         <Languages />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
@@ -155,8 +158,8 @@ function ThemeSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="ghost" size="icon" aria-label={t("theme")} />}>
-        <Icon />
+      <DropdownMenuTrigger render={<Button variant="ghost" size="icon-sm" className="rounded-full" aria-label={t("theme")} />}>
+        <Icon key={resolvedTheme} className="fade-in transition-transform duration-500 hover:rotate-45" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
         <DropdownMenuGroup>

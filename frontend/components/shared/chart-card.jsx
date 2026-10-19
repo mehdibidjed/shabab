@@ -22,6 +22,7 @@ export function ChartCard({ title, description, table, legend, children, classNa
             <Button
               variant="ghost"
               size="icon-sm"
+              className="rounded-full text-muted-foreground"
               onClick={() => setAsTable((v) => !v)}
               aria-label={asTable ? t("showChart") : t("showTable")}
               title={asTable ? t("showChart") : t("showTable")}
@@ -34,7 +35,7 @@ export function ChartCard({ title, description, table, legend, children, classNa
       <CardContent className="flex flex-col gap-3">
         {legend && !asTable && legend}
         {asTable && table ? (
-          <Table>
+          <Table className="fade-in">
             <TableHeader>
               <TableRow>
                 {table.columns.map((c, i) => (

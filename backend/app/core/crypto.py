@@ -4,6 +4,8 @@ The key comes from env `CASE_KEY`. For the zero-setup demo, if it is missing we
 generate a development key in `backend/.case_key` (gitignored) and warn loudly:
 never do this in production, where the key belongs in a secrets manager.
 """
+import base64
+import hashlib
 import logging
 import os
 from pathlib import Path
@@ -16,10 +18,20 @@ log = logging.getLogger(__name__)
 DEV_KEY_FILE = Path(__file__).resolve().parents[2] / ".case_key"
 
 
+def _as_fernet_key(secret: str) -> bytes:
+    """Accept a real Fernet key, or derive one from any other secret string
+    (hosting platforms generate secrets in plain base64, which Fernet rejects)."""
+    try:
+        Fernet(secret.encode())
+        return secret.encode()
+    except ValueError:
+        return base64.urlsafe_b64encode(hashlib.sha256(secret.encode()).digest())
+
+
 def _load_key() -> bytes:
     key = os.getenv("CASE_KEY")
     if key:
-        return key.encode()
+        return _as_fernet_key(key)
     if not DEV_KEY_FILE.exists():
         DEV_KEY_FILE.write_bytes(Fernet.generate_key())
         DEV_KEY_FILE.chmod(0o600)

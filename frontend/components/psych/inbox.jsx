@@ -17,8 +17,8 @@ import { ALERT_META, PersonName, StatusPill, useAlertDetails } from "./common";
 
 export function PsychInbox() {
   return (
-    <div className="grid items-start gap-4 md:gap-6 xl:grid-cols-3">
-      <div className="flex flex-col gap-4 md:gap-6 xl:col-span-2">
+    <div className="stagger grid items-start gap-4 md:gap-5 xl:grid-cols-3">
+      <div className="flex flex-col gap-4 md:gap-5 xl:col-span-2">
         <AlertsCard />
         <ReferralsCard />
       </div>

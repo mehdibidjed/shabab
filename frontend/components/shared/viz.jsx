@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
+import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip as ChartTooltip, XAxis, YAxis } from "recharts";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { dirOf } from "@/i18n/config";
@@ -44,17 +45,17 @@ export function TooltipBox({ title, rows }) {
   );
 }
 
-/** Horizontal bars in HTML rather than SVG: RTL-native, labels wrap on phones,
- *  and each row carries a direct value label plus a hover tooltip.
- *  With `onSelect`, rows become buttons (e.g. click a category to filter a table). */
+/** Horizontal bars in HTML rather than SVG: RTL-native, labels wrap on phones.
+ *  Each row: label and value on one line, a thin rounded bar underneath that grows
+ *  in on mount (staggered). With `onSelect`, rows become buttons (click to filter). */
 export function BarList({ rows, onSelect, selectedKey }) {
   const locale = useLocale();
   const max = Math.max(1, ...rows.map((r) => r.value));
-  const rowClass =
-    "grid w-full grid-cols-[minmax(5.5rem,10rem)_1fr] items-center gap-3 rounded-md px-1 py-1 text-start text-sm hover:bg-muted";
+  const grown = useGrowIn();
+  const rowClass = "flex w-full flex-col gap-1.5 rounded-xl px-2 py-1.5 text-start text-sm transition-colors";
   return (
-    <ul className="flex flex-col gap-1">
-      {rows.map((r) => (
+    <ul className="-mx-2 flex flex-col gap-0.5">
+      {rows.map((r, i) => (
         <li key={r.key}>
           <Tooltip>
             <TooltipTrigger
@@ -64,21 +65,26 @@ export function BarList({ rows, onSelect, selectedKey }) {
                     type="button"
                     onClick={() => onSelect(r.key)}
                     aria-pressed={selectedKey === r.key}
-                    className={cn(rowClass, "cursor-pointer", selectedKey === r.key && "bg-primary/10 ring-1 ring-primary/30")}
+                    className={cn(rowClass, "cursor-pointer hover:bg-muted/70", selectedKey === r.key && "bg-accent hover:bg-accent")}
                   />
                 ) : (
-                  <div className={rowClass} />
+                  <div className={cn(rowClass, "hover:bg-muted/50")} />
                 )
               }
             >
-              <span className="text-muted-foreground">{r.label}</span>
-              <span className="flex items-center gap-2">
+              <span className="flex items-baseline justify-between gap-3">
+                <span className="text-foreground/80">{r.label}</span>
+                <span className="shrink-0 font-medium tabular-nums">{fmtNumber(r.value, locale)}</span>
+              </span>
+              <span className="h-2 w-full overflow-hidden rounded-full bg-muted" aria-hidden>
                 <span
-                  className="h-5 rounded-e-[4px]"
-                  style={{ width: `${(100 * r.value) / max}%`, minWidth: 2, background: r.color }}
-                  aria-hidden
+                  className="block h-full rounded-full transition-[width] duration-700 ease-out"
+                  style={{
+                    width: grown ? `${Math.max(1.5, (100 * r.value) / max)}%` : "0%",
+                    background: r.color,
+                    transitionDelay: `${i * 45}ms`,
+                  }}
                 />
-                <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{fmtNumber(r.value, locale)}</span>
               </span>
             </TooltipTrigger>
             <TooltipContent className="p-0">{r.tooltip}</TooltipContent>
@@ -87,6 +93,16 @@ export function BarList({ rows, onSelect, selectedKey }) {
       ))}
     </ul>
   );
+}
+
+/** false on the first frame, then true: lets CSS transitions animate from zero. */
+export function useGrowIn() {
+  const [grown, setGrown] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setGrown(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  return grown;
 }
 
 /** One column per month (single series). `rows`: [{ month: "YYYY-MM", value, ... }];
@@ -100,7 +116,7 @@ export function MonthlyColumns({ rows, tooltipRows, height = 240 }) {
     <div dir="ltr" className="w-full" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={rows} margin={{ top: 12, right: 8, bottom: 0, left: 8 }} barCategoryGap="25%">
-          <CartesianGrid vertical={false} stroke={C.grid} />
+          <CartesianGrid vertical={false} stroke={C.grid} strokeDasharray="3 4" />
           <XAxis
             dataKey="month"
             reversed={rtl}
@@ -134,7 +150,7 @@ export function MonthlyColumns({ rows, tooltipRows, height = 240 }) {
             maxBarSize={36}
             shape={(props) => {
               const { x, y, width, height: h, payload } = props;
-              const r = Math.min(4, width / 2, h);
+              const r = Math.min(6, width / 2, h);
               return (
                 <path
                   d={`M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + width - r}Q${x + width},${y} ${x + width},${y + r}V${y + h}Z`}

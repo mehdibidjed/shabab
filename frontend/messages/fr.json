@@ -62,7 +62,8 @@
     "vsLastMonth": "{delta} vs même période du mois dernier",
     "occupancy": "Taux d'occupation",
     "occupancyLast": "Mois dernier : {pct}",
-    "noChange": "Stable"
+    "noChange": "Stable",
+    "vsLastMonthShort": "vs même période le mois dernier"
   },
   "charts": {
     "members": "Évolution des adhérents",
@@ -457,7 +458,8 @@
     "publishedHint": "Publié au calendrier de la maison de jeunes : visible par les jeunes et les éducateurs.",
     "calendarTitle": "Prochaines séances de prévention",
     "calendarSub": "Calendrier de la maison de jeunes",
-    "calendarEmpty": "Aucune séance programmée"
+    "calendarEmpty": "Aucune séance programmée",
+    "details": "Détails"
   },
   "educator": {
     "referTitle": "Orienter un jeune vers le psychologue",

@@ -16,13 +16,13 @@ export function AppShell({ children }) {
   return (
     <div className="flex min-h-dvh">
       {/* Desktop sidebar; on the start side, so right in Arabic and left in fr/en. */}
-      <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 border-e bg-sidebar lg:block">
+      <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 bg-sidebar lg:block">
         <SidebarContent />
       </aside>
 
       {/* Mobile drawer */}
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side={locale === "ar" ? "right" : "left"} className="w-72 bg-sidebar p-0">
+        <SheetContent side={locale === "ar" ? "right" : "left"} className="w-72 border-0 bg-sidebar p-0">
           <SheetTitle className="sr-only">{t("menu")}</SheetTitle>
           <SidebarContent onNavigate={() => setOpen(false)} />
         </SheetContent>
@@ -42,7 +42,7 @@ export function AppShell({ children }) {
             </Button>
           }
         />
-        <main className="mx-auto w-full max-w-[1400px] flex-1 p-4 md:p-6">{children}</main>
+        <main className="mx-auto w-full max-w-[1360px] flex-1 px-4 pb-10 pt-2 md:px-8 md:pt-4">{children}</main>
       </div>
     </div>
   );
